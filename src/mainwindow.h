@@ -17,11 +17,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    bool empty = true;
 
 private slots:
     void press_button();
 
     void on_pushButton_clear_released();
-    void on_pushButton_comma_released();
+    void on_pushButton_equal_released();
 };
 #endif // MAINWINDOW_H

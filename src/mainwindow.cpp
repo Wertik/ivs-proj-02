@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-//#include <QDebug>
+#include <QDebug>
+
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -9,16 +11,34 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->pushButton_0, SIGNAL(released()),this,SLOT(press_button())); //push buttons for every number
-    connect(ui->pushButton_1, SIGNAL(released()),this,SLOT(press_button()));
-    connect(ui->pushButton_2, SIGNAL(released()),this,SLOT(press_button()));
-    connect(ui->pushButton_3, SIGNAL(released()),this,SLOT(press_button()));
-    connect(ui->pushButton_4, SIGNAL(released()),this,SLOT(press_button()));
-    connect(ui->pushButton_5, SIGNAL(released()),this,SLOT(press_button()));
-    connect(ui->pushButton_6, SIGNAL(released()),this,SLOT(press_button()));
-    connect(ui->pushButton_7, SIGNAL(released()),this,SLOT(press_button()));
-    connect(ui->pushButton_8, SIGNAL(released()),this,SLOT(press_button()));
-    connect(ui->pushButton_9, SIGNAL(released()),this,SLOT(press_button()));
+    // Manually connect buttons that append to expression.
+
+    vector<QPushButton*> buttons = {
+        ui->pushButton_0,
+        ui->pushButton_1,
+        ui->pushButton_2,
+        ui->pushButton_3,
+        ui->pushButton_4,
+        ui->pushButton_5,
+        ui->pushButton_6,
+        ui->pushButton_7,
+        ui->pushButton_8,
+        ui->pushButton_9,
+        ui->pushButton_comma,
+        ui->pushButton_plus,
+        ui->pushButton_minus,
+        ui->pushButton_multiply,
+        ui->pushButton_divide,
+        ui->pushButton_power,
+        ui->pushButton_square,
+        ui->pushButton_fakt,
+        ui->pushButton_l_bracket,
+        ui->pushButton_r_bracket
+    };
+
+    for (const QPushButton* button : buttons) {
+        connect(button, SIGNAL(released()), this, SLOT(press_button()));
+    }
 }
 
 MainWindow::~MainWindow()
@@ -28,27 +48,27 @@ MainWindow::~MainWindow()
 
 void MainWindow::press_button()
 {
-    //qDebug() << "test";
-    QPushButton * button = (QPushButton*)sender(); // signal that sends number to calculator
+    QPushButton * button = (QPushButton*)sender();
 
-    double label_num; // store number
-    QString label_str; // string from number
+    QString labelStr;
+    if (this->empty) {
+        labelStr = button->text();
+        this->empty = false;
+    } else {
+        labelStr = ui->label->text() + button->text();
+    }
 
-    label_num = (ui->label->text() + button->text()).toDouble(); // double convertion
-
-    label_str = QString::number(label_num,'g',16); // converting to string and limit maximum numbers which can be desplayed to 16
-
-    ui->label->setText(label_str); // sending to output
+    ui->label->setText(labelStr);
 }
 
 void MainWindow::on_pushButton_clear_released()
 {
     ui->label->setText("0");
+    this->empty = true;
 }
 
-
-void MainWindow::on_pushButton_comma_released()
+void MainWindow::on_pushButton_equal_released()
 {
-    ui->label->setText(ui->label->text() + ".");
+    // Evaluate expression and display result here.
 }
 
