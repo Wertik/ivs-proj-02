@@ -1,19 +1,19 @@
-Prostredi
----------
+# Prostředí
 
-Ubuntu 64bit
-Windows 64bit
+- Ubuntu 64bit
+- Windows 64bit
 
-Autori
-------
+# Autoři
 
-Nazev tymu
-- xlogin01 jmeno prijmeni 
-- xlogin02 jmeno prijmeni 
-- xlogin03 jmeno prijmeni 
-- xlogin04 jmeno prijmeni 
+CMYK Team
 
-Licence
--------
+| Login | Jméno |
+|--|--|
+| xkucik00 | Kučík Adam |
+| xotrad00 | Otradovec Martin |
+| xskund02 | Škunda Jakub |
+| xvince01 | Vincenc Lukáš |
+
+# Licence
 
 Tento program je poskytovan...
