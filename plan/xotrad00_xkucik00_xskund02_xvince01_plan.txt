@@ -1,0 +1,56 @@
+# Termíny
+
+Březen:
+- (Management) Sestavení konkrétních úkolů a přepsání do Github issues - 27. 3.
+- Zhotovení návrhu GUI - 27. 3.
+- Zhotovení matematické knihovny - 31. 3.
+
+Duben:
+- Základní mockup GUI - 3. 4.
+- Zhotovení finálního produktu - 23. 4.
+- Týmové testování (QA) instalace a funkčnosti - 24. 4.
+- (Deadline) Produkt - 28. 4.
+
+Květen:
+- Týmové testování (QA) instalace - 1. 5.
+- (Deadline) Instalace - 6. 5.
+- (Deadline) Problémy - 20. 5.
+- Meeting ohledně obhajoby práce - 22. 5.
+- (Deadline) Obhajoba - 23.5.
+
+# Rozdělení práce
+
+Uvedení lidé zodpovídají za jednotlivé části projektu (code reviews, řízení issues), na prvcích a konkrétních požadavcích ale pracují všichni.
+
+- Knihovna pro matematické operace - xskund02
+- Testy pro matematickou knihovnu - xkucik00
+- Návrh GUI - xvince01
+- Implementace GUI - xskund02
+- Dokumentace (uživatelský manuál, texty nápovědy, prezentace) - xkucik00
+- Kvalita kódu & organizace - xotrad00
+- Profiling - xvince01
+- Instalace - xotrad00
+
+# Komunikace
+
+## Komunikační kanály
+- Discord server pro realtime chat a diskuzi
+- Github issues pro lepší správu aktuálních cílů projektu a konkrétní diskuzi
+
+## Pravidla komunikace
+
+Obecné:
+- Vyšší princip mravní.
+
+Github:
+- Držet se tématu jednotlivých issues
+- Využívat všech prvků linkování commitů, dalších issues, etc. pro přehlednost
+- Zprávy commitů výhradně v anglickém jazyce
+- Dokumentace a komentáře kódu výhradně v anglickém jazyce
+
+# Verzování
+
+Systém pro správu verzí: Github (https://github.com)
+
+Repozitář: https://github.com/Wertik/ivs-proj-02
+( Uživatel ivskontrola byl přidán jako collaborator )
