@@ -23,11 +23,19 @@ double myDivision(double nr1, double nr2){
 double myFactiorial(double nr){
     
     if(nr < 0){ 
-        throw(std::invalid_argument("number must be possitive"));
+        throw(std::invalid_argument("number must be possitive!"));
     }
 
     if(nr > 20) {
-        throw(std::invalid_argument("number is too large"));
+        throw(std::invalid_argument("number is too large!"));
+    }
+
+    if(trunc(nr) != nr){
+        throw(std::invalid_argument("must be integer!"));
+    }
+
+    if(nr == 0){
+        return 1;
     }
 
     long int result = nr;
@@ -41,175 +49,99 @@ double myFactiorial(double nr){
 double myExponent(double nr1, double nr2){
     double result = nr1;
 
+    bool minusExponent = false;
+
     if (nr2 == 0) {
         return 1; 
     }
 
-    for (size_t i = 0; i < nr2-1; i++)
+    int till = nr2;
+
+    if (nr2 < 0){
+        minusExponent = true;
+        till = abs(nr2);
+    }
+
+    for (size_t i = 0; i < till-1; i++)
     {
         result = result * nr1;
     }
-    return result;
+
+    if (minusExponent == true){
+        return 1/result;
+    }
+    else {
+        return result;
+    }
 }
 
-double Calculator::processInput(string vyraz){
-    int state = 0;
-    string variable;
+double Calculator::processInput(string expression){
+    
     list<StackElement> myList;
-    for (size_t i = 0; i < vyraz.length() + 1; i++)
-    {
+    string value;
+    int i = 0;
 
-        switch (state)
-        {
+    while (i  < expression.length()){
+        if((expression[i] >= '0' && expression[i] <= '9')){
 
-            case DEFAULT:
-                if(vyraz[i] >= '0' && vyraz[i] <= '9'){
-                    variable = vyraz[i];
-                    state = NUMBER;
-                }
+            if(i > 0 && expression[i-1] == '-'){
                 
-                else if(vyraz[i] == '('){
-                    StackElement *el = new StackElement;
-                    el->type = "lbracket";
-                    myList.push_back(*el);
-                    state = DEFAULT;
+                if(i == 1 || (i > 1 && (
+                    expression[i - 2] == '(' ||
+                    expression[i - 2] == '-' ||
+                    expression[i - 2] == '+' ||
+                    expression[i - 2] == '*' ||
+                    expression[i - 2] == '/'))){
+
+                value = "-";
+                myList.pop_back();
                 }
+            }
 
-                else if(vyraz[i] == ')'){
-                    StackElement *el = new StackElement;
-                    el->type = "rbracket";
-                    myList.push_back(*el);
-                    state = DEFAULT;
-                }
+            while (i < expression.length() && (expression[i] == '.' || (expression[i] >= '0' && expression[i] <= '9'))){
+                value = value + expression[i];
+                i++;
+            }
 
-                else if(vyraz[i] == '+'){
-                    StackElement *el = new StackElement;
-                    el->type = "plus";
-                    myList.push_back(*el);
-                    state = DEFAULT;
-                }
+            StackElement *el = new StackElement;
+            el->type = "number";
+            el->value = stod(value);
+            myList.push_back(*el);
 
-                else if(vyraz[i] == '-'){
-                    StackElement *el = new StackElement;
-                    el->type = "minus";
-                    myList.push_back(*el);
-                    state = DEFAULT;
-                }
-
-                else if(vyraz[i] == '*'){
-                    StackElement *el = new StackElement;
-                    el->type = "multiplication";
-                    myList.push_back(*el);
-                    state = DEFAULT;
-                }
-
-                else if(vyraz[i] == '/'){
-                    StackElement *el = new StackElement;
-                    el->type = "division";
-                    myList.push_back(*el);
-                    state = DEFAULT;
-                }
-
-                else if(vyraz[i] == '^'){
-                    StackElement *el = new StackElement;
-                    el->type = "exponent";
-                    myList.push_back(*el);
-                    state = DEFAULT;
-                }
-
-                else if(vyraz[i] == '!'){
-                    StackElement *el = new StackElement;
-                    el->type = "factorial";
-                    myList.push_back(*el);
-                    state = DEFAULT;
-                }
-
-                else if(vyraz[i] == ' ' || vyraz[i] == '\0'){
-                    state = DEFAULT;
-                }
-
-                break;
-
-            case NUMBER:
-                if((vyraz[i] >= '0' && vyraz[i] <= '9') || vyraz[i] == '.'){
-                    variable = variable + vyraz[i];
-                    state = NUMBER;
-                }
-                else{
-                    StackElement *nr = new StackElement;
-                    nr->type = "number";
-                    nr->value = std::stod(variable);
-                    myList.push_back(*nr);
-
-                    if(vyraz[i] == '+'){
-                        StackElement *op = new StackElement;
-                        op->type = "plus";
-                        myList.push_back(*op);
-                        state = DEFAULT;
-                    }
-
-                    else if(vyraz[i] == '-'){
-                        StackElement *op = new StackElement;
-                        op->type = "minus";
-                        myList.push_back(*op);
-                        state = DEFAULT;
-                    }
-
-                    else if(vyraz[i] == '*'){
-                        StackElement *op = new StackElement;
-                        op->type = "multiplication";
-                        myList.push_back(*op);
-                        state = DEFAULT;
-                    }
-
-                    else if(vyraz[i] == '/'){
-                        StackElement *op = new StackElement;
-                        op->type = "division";
-                        myList.push_back(*op);
-                        state = DEFAULT;
-                    }
-
-                    else if(vyraz[i] == '^'){
-                        StackElement *op = new StackElement;
-                        op->type = "exponent";
-                        myList.push_back(*op);
-                        state = DEFAULT;
-                    }
-
-                    else if(vyraz[i] == '!'){
-                        StackElement *op = new StackElement;
-                        op->type = "factorial";
-                        myList.push_back(*op);
-                        state = DEFAULT;
-                    }
-
-                    else if(vyraz[i] == '('){
-                        StackElement *op = new StackElement;
-                        op->type = "lbracket";
-                        myList.push_back(*op);
-                        state = DEFAULT;
-                    }
-
-                    else if(vyraz[i] == ')'){
-                        StackElement *op = new StackElement;
-                        op->type = "rbracket";
-                        myList.push_back(*op);
-                        state = DEFAULT;
-                    }
-
-                    else if(vyraz[i] == '\0' || vyraz[i] == ' '){
-                        state = DEFAULT;
-                    }
-
-                    else{
-                        printf("CHYBA");
-                        exit(0);
-                    }
-
-                    break;
-                }
+            i--;
+            value = "";   
         }
+        else{
+            StackElement *el = new StackElement;
+            if (expression[i] == '+'){
+                el->type = "plus";
+            }
+            else if(expression[i] == '-'){
+                el->type = "minus";
+            }
+            else if(expression[i] == '*'){
+                el->type = "multiplication";
+            }
+            else if(expression[i] == '/'){
+                el->type = "division";
+            }
+            else if(expression[i] == '!'){
+                el->type = "factorial";
+            }
+            else if(expression[i] == '^'){
+                el->type = "exponent";
+            }
+            else if(expression[i] == '('){
+                el->type = "lbracket";
+            }
+            else if(expression[i] == ')'){
+                el->type = "rbracket";
+            }
+            myList.push_back(*el);
+        }
+        i++;
     }
+
     StackElement *end = new StackElement;
     end->type = "end";
     myList.push_back(*end);
@@ -294,13 +226,14 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
         return myStack;
     }
 
+    // rule E + E -> E
+    // rule E - E -> E
     else if(stackTop(myStack) == 0){
         StackElement el1 = myStack.top();
         myStack.pop();
         StackElement el2 = myStack.top();
         myStack.pop();
         StackElement el3 = myStack.top();
-
 
         double outNr;
 
@@ -311,13 +244,14 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
         else if(el2.type == "minus"){
             outNr = myMinus(el3.value, el1.value);
         }
-
         
         myStack.top().value = outNr;
         myStack.top().type = "E-type";
         return myStack;
     }
 
+    // rule E * E -> E
+    // rule E / E -> E
     else if(stackTop(myStack) == 1){
         StackElement el1 = myStack.top();
         myStack.pop();
@@ -327,7 +261,7 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
 
         double outNr;
 
-        if (el2.type == "exponent"){
+        if (el2.type == "multiplication"){
             outNr = myMultiplication(el3.value, el1.value);    
         }
         else if(el2.type == "division"){
@@ -338,6 +272,7 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
         return myStack;
     }
 
+    // rule E ^ E -> E
     else if(stackTop(myStack) == 6){
         StackElement el1 = myStack.top();
         myStack.pop();
@@ -353,6 +288,7 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
         return myStack;
     }
 
+    // rule E! -> E
     else if(stackTop(myStack) == 7){
         StackElement el1 = myStack.top();
         myStack.pop();
@@ -365,9 +301,7 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
         myStack.top().type = "E-type";
         return myStack;
     }
-
     return myStack;
-    
 }
 
 double precedenceAnalysis(list<StackElement> myList){
@@ -380,27 +314,23 @@ double precedenceAnalysis(list<StackElement> myList){
 
     StackElement el;
     do{
-        // printf("%i %i", stackTop(myStack), incomingType(myList)); 
         switch(table[stackTop(myStack)][incomingType(myList)]){
             
+            case 'E':
+                throw(std::invalid_argument("Wrong expression - PSA error!"));
+                break;
+
             case 'L':
-                // puts("L");
                 el = myList.front();
                 myList.pop_front();
                 myStack.push(el);
                 break;
 
             case 'R':
-                // puts("R");
-                // cout << myStack.top().type.c_str();
                 myStack = reduceByRule(myStack);
-                // cout << myStack.top().type.c_str();
-                // cout << "\n------------------\n";
                 break;
 
             case 'I':
-                // puts("I");
-                
                 StackElement noterm = myStack.top();
                 myStack.pop();
                 myStack.pop();

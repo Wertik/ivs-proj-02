@@ -1,23 +1,37 @@
+/**
+ * @file mathlib2.h
+ * @author Jakub Skunda (xskund02)
+ * @brief Implementation of math library and PSA analysis
+ * @version 0.1
+ * @date 2022-04-26
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #include <iostream>
 #include <stdio.h>
 #include <string>
 #include <stack>
 #include <list>
+#include <cmath>
 using namespace std;
 
-
-enum states{
-    DEFAULT,
-    NUMBER,
-};
-
+/**
+ * @brief Class for Stack and List
+ * @param type type of element in stack or list
+ * @param value value of element
+ */
 class StackElement{
     public:
         string type;
         double value;
 };
 
-
+/**
+ * @brief Table for precedence analysis
+ * 
+ */
 int table[8][8]={
 
     // I       N       P       U       T
@@ -34,11 +48,45 @@ int table[8][8]={
         {'R','R','L','R','L','R','R','R'}  // !           
 };
 
+// functions for PSA
 
+/**
+ * @brief Function that selects state from PSA table
+ * 
+ * @param myList 
+ * @return double 
+ */
 double precedenceAnalysis(list<StackElement> myList);
 
 
+/**
+ * @brief Returns type of top terminal from stack
+ * 
+ * @param myStack 
+ * @return int 
+ */
+int stackTop(stack<StackElement> myStack);
 
+
+/**
+ * @brief Returns type of incoming symbol
+ * 
+ * @param myList 
+ * @return int 
+ */
+int incomingType(list<StackElement> myList);
+
+
+/**
+ * @brief Function that reduces terminal to non-term or group of non-terms to non-term
+ * 
+ * @param myStack 
+ * @return stack<StackElement> 
+ */
+stack<StackElement> reduceByRule(stack<StackElement> myStack);
+
+
+// my math operations
 
 /**
  * @brief implementation of addition
@@ -97,7 +145,7 @@ double myFactiorial(double nr);
  * 
  * @param nr1 
  * @param nr2 
- * @return double 
+ * @return 
  */
 double myExponent(double nr1, double nr2);
 
@@ -109,4 +157,3 @@ public:
     double processInput(string vyraz);
 
 };
-
