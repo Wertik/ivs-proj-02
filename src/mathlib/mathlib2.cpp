@@ -91,8 +91,9 @@ double Calculator::processInput(string expression){
                     expression[i - 2] == '-' ||
                     expression[i - 2] == '+' ||
                     expression[i - 2] == '*' ||
-                    expression[i - 2] == '/'))){
-
+                    expression[i - 2] == '/' ||
+                    expression[i - 2] == '^'))){
+                        
                 value = "-";
                 myList.pop_back();
                 }

@@ -137,6 +137,7 @@ TEST_F(Math_test, exponent){
     EXPECT_EQ(math.processInput("-2^3"), -8);
     EXPECT_EQ(math.processInput("2.5^2"), 6.25);
     EXPECT_EQ(math.processInput("2^(-2)"), 0.25);
+    EXPECT_EQ(math.processInput("2^-2"), 0.25);
 }
 
 TEST_F(Math_test, mixed){
