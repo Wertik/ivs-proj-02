@@ -42,6 +42,7 @@ private:
     void set_expression(QString expr);
     void append_to_expression(QString expr, bool force_append);
     void append_to_expression(QString expr);
+    void append_digit(QString digit);
     void reset();
 
     void stop_number();

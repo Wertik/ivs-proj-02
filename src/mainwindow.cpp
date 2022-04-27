@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QDebug>
+#include <QShortcut>
 
 using namespace std;
 
@@ -104,14 +105,18 @@ void MainWindow::stop_number() {
 
 // Slots
 
+void MainWindow::append_digit(QString digit)
+{
+    this->append_to_expression(digit);
+    this->lastToken = DIGIT;
+    this->building_number = true;
+}
+
 // Simply append any digits to the expression.
 void MainWindow::press_digit()
 {
     QPushButton * button = (QPushButton*)sender();
-
-    this->append_to_expression(button->text());
-    this->lastToken = DIGIT;
-    this->building_number = true;
+    this->append_digit(button->text());
 }
 
 // Simply append any operators that don't require any extra work or checks.
