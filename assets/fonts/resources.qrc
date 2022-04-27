@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file>InriaSans-Bold.ttf</file>
+        <file>InriaSans-BoldItalic.ttf</file>
+        <file>InriaSans-Italic.ttf</file>
+        <file>InriaSans-Light.ttf</file>
+        <file>InriaSans-LightItalic.ttf</file>
+        <file>InriaSans-Regular.ttf</file>
+    </qresource>
+</RCC>
