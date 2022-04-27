@@ -112,6 +112,7 @@ TEST_F(Math_test, brackets){
     EXPECT_EQ(math.processInput("((1+1)-3)"), -1);
     EXPECT_EQ(math.processInput("((((1))))"), 1);
     EXPECT_EQ(math.processInput("((1+1)-3)+1"), 0);
+    EXPECT_EQ(math.processInput("(+4)"), 4);
 }
 
 TEST_F(Math_test, factorial){
@@ -138,6 +139,26 @@ TEST_F(Math_test, exponent){
     EXPECT_EQ(math.processInput("2.5^2"), 6.25);
     EXPECT_EQ(math.processInput("2^(-2)"), 0.25);
     EXPECT_EQ(math.processInput("2^-2"), 0.25);
+}
+
+TEST_F(Math_test, Root) {
+    // equal
+    ASSERT_EQ(math.processInput("2_4"), 2);
+    EXPECT_EQ(math.processInput("2_0"), 0);
+    EXPECT_EQ(math.processInput("2_9"), 3);
+    EXPECT_EQ(math.processInput("3_27"), 3);
+    EXPECT_EQ(math.processInput("3_-8"), -2);
+    EXPECT_EQ(math.processInput("2_1000000"), 1000);
+
+    // not equal
+    ASSERT_NE(math.processInput("2_16"), 8);
+    EXPECT_NE(math.processInput("2_9"), 4.5);
+    EXPECT_NE(math.processInput("3_-8"), 2);
+
+    // false
+    EXPECT_ANY_THROW(math.processInput("-3_8"));
+    EXPECT_ANY_THROW(math.processInput("2_-1"));
+    EXPECT_ANY_THROW(math.processInput("4_-1"));
 }
 
 TEST_F(Math_test, mixed){
