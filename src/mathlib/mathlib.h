@@ -31,7 +31,16 @@ class StackElement{
         double value;
 };
 
-
+enum errorCodes{
+    ZERO_DIVISION,
+    NEGATIVE_FACTORIAL,
+    TOO_LARGE_FACTORIAL,
+    NO_INTEGER_FACTORIAL,
+    NO_INTEGER_ROOT,
+    ROOT_NR_LESS_THAN_1,
+    ROOT_EVEN_NR_NEGATIVE,
+    PSA_ERROR,
+};
 
 // functions for PSA
 

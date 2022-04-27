@@ -14,7 +14,7 @@ double myMultiplication(double nr1, double nr2){
 
 double myDivision(double nr1, double nr2){
     if (nr2 == 0){
-        throw(std::invalid_argument("zero divission"));
+        throw ZERO_DIVISION;
     }
 
     return nr1 / nr2;
@@ -23,15 +23,15 @@ double myDivision(double nr1, double nr2){
 double myFactiorial(double nr){
     
     if(nr < 0){ 
-        throw(std::invalid_argument("number must be possitive!"));
+        throw NEGATIVE_FACTORIAL;
     }
 
     if(nr > 20) {
-        throw(std::invalid_argument("number is too large!"));
+        throw TOO_LARGE_FACTORIAL;
     }
 
     if(trunc(nr) != nr){
-        throw(std::invalid_argument("must be integer!"));
+        throw NO_INTEGER_FACTORIAL;
     }
 
     if(nr == 0){
@@ -77,12 +77,12 @@ double myExponent(double nr1, double nr2){
 
 double myRoot(double nr1, double nr2){
     if(nr1 != lround(nr1))
-		throw std::invalid_argument("nth root, n is not an integer!");
+		throw NO_INTEGER_ROOT;
 	if(nr1 < 1)
-		throw std::invalid_argument("nth root, n is lower than 1!");
+		throw ROOT_NR_LESS_THAN_1;
 	long ln_root = lround(nr1);
 	if(nr2 < 0 && (ln_root % 2) == 0)
-		throw std::invalid_argument("nth root, nr2 cannot be negative if root is even!");
+		throw ROOT_EVEN_NR_NEGATIVE;
 	if(nr2 < 0)
 		return -std::pow(-nr2,1/nr1);
 	return std::pow(nr2,1/nr1);
@@ -390,7 +390,7 @@ double precedenceAnalysis(list<StackElement> myList){
         switch(table[stackTop(myStack)][incomingType(myList)]){
             
             case 'E':
-                throw(std::invalid_argument("Wrong expression - PSA error!"));
+                throw PSA_ERROR;
                 break;
 
             case 'L':
