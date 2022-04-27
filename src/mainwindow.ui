@@ -435,8 +435,8 @@ border: none;</string>
      <enum>Qt::NoFocus</enum>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: #A59E9E; 
-border: none;</string>
+     <string notr="true">border: none;
+background-color: #A59E9E;</string>
     </property>
     <property name="text">
      <string>=</string>
@@ -595,14 +595,14 @@ border: none;</string>
      <rect>
       <x>390</x>
       <y>360</y>
-      <width>161</width>
+      <width>21</width>
       <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Inria Sans Light</family>
-      <pointsize>36</pointsize>
+      <pointsize>20</pointsize>
      </font>
     </property>
     <property name="styleSheet">

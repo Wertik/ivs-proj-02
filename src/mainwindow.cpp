@@ -12,6 +12,18 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
     ui->setupUi(this);
 
+    QString button_style = "QPushButton { border: none; background-color: #C4C4C4; } QPushButton:pressed { background-color: #B5B5B5; }";
+    QString button_style_darker = "QPushButton { border: none; background-color: #A59E9E; } QPushButton:pressed { background-color: #9C9292; }";
+
+    ui->pushButton_equal->setStyleSheet(button_style_darker);
+    ui->pushButton_clear->setStyleSheet(button_style_darker);
+    ui->pushButton_comma->setStyleSheet(button_style);
+    ui->pushButton_divide->setStyleSheet(button_style);
+    ui->pushButton_power->setStyleSheet(button_style);
+    ui->pushButton_square->setStyleSheet(button_style);
+    ui->pushButton_l_bracket->setStyleSheet(button_style);
+    ui->pushButton_r_bracket->setStyleSheet(button_style);
+
     // Manually connect digit buttons.
 
     vector<QPushButton*> digit_buttons = {
@@ -27,7 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
         ui->pushButton_9,
     };
 
-    for (const QPushButton* button : digit_buttons) {
+    for (QPushButton* button : digit_buttons) {
+        button->setStyleSheet(button_style);
         connect(button, SIGNAL(released()), this, SLOT(press_digit()));
     }
 
@@ -40,7 +53,8 @@ MainWindow::MainWindow(QWidget *parent)
         ui->pushButton_divide,
     };
 
-    for (const QPushButton* button : simple_operator_buttons) {
+    for (QPushButton* button : simple_operator_buttons) {
+        button->setStyleSheet(button_style);
         connect(button, SIGNAL(released()), this, SLOT(press_simple_operator()));
     }
 
