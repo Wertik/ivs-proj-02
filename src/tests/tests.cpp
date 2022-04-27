@@ -9,7 +9,7 @@
  * 
  */
 
-#include "../mathlib/mathlib2.cpp"
+#include "../mathlib/mathlib.cpp"
 #include "gtest/gtest.h"
 
 class Math_test : public ::testing::Test{
