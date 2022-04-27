@@ -8,6 +8,9 @@
 
 using namespace std;
 
+#define STYLE_DISPLAY_DEFAULT "background-color: #444A49; color: #F4EAEA; border-radius: 10px;"
+#define STYLE_DISPLAY_ERROR "background-color: #444A49; color: #F99494; border-radius: 10px;"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -72,8 +75,32 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::set_expression(QString expr) {
+void MainWindow::set_display(QString expr) {
+    if (this->lastToken == NONE) {
+        ui->label->setStyleSheet(STYLE_DISPLAY_DEFAULT);
+    }
+
     ui->label->setText(expr);
+}
+
+void MainWindow::display_error(int error_code) {
+    qDebug() << "Error code:" << error_code;
+
+    QString error_message;
+
+    if (error_code >= ERROR_MESSAGES) {
+        qDebug() << "No messagee for error code" << error_code;
+        error_message = "err code " + QString::number(error_code, 10);
+    } else {
+        error_message = error_messages[error_code];
+    }
+
+    ui->label->setStyleSheet(STYLE_DISPLAY_ERROR);
+    this->set_display("ERR: " + error_message);
+
+    this->lastToken = NONE;
+    this->empty = true;
+    this->stop_number();
 }
 
 void MainWindow::append_to_expression(QString expr, bool force_append) {
@@ -90,7 +117,7 @@ void MainWindow::append_to_expression(QString expr, bool force_append) {
         }
     }
 
-    this->set_expression(final_expression);
+    this->set_display(final_expression);
 }
 
 void MainWindow::append_to_expression(QString expr) {
@@ -146,7 +173,7 @@ void MainWindow::press_simple_operator() {
 // Clear
 void MainWindow::on_pushButton_clear_released()
 {
-    this->set_expression("0");
+    this->set_display("0");
     this->has_comma = false;
     this->building_number = true;
     this->reset();
@@ -159,7 +186,14 @@ void MainWindow::on_pushButton_equal_released()
 
     QString qExpression = ui->label->text();
 
-    double result = this->calc.processInput(qExpression.trimmed().toUtf8().constData());
+    double result;
+
+    try {
+        result = this->calc.processInput(qExpression.trimmed().toUtf8().constData());
+    } catch (ErrorCode error_code) {
+        this->display_error(error_code);
+        return;
+    }
 
     QString qResult = QString::number(result, 'g', 12);
 
@@ -303,20 +337,22 @@ void MainWindow::copy_result()
     clipboard->setText(content);
 }
 
-void MainWindow::on_pushButton_hint_clicked()
+void MainWindow::on_pushButton_hint_released()
 {
     QMessageBox msgBox;
-    QString msg = tr("                          Napoveda                           \n \
-Cislice 0-9 zadavaju cisla do panela\n \
-Funkcia '+' scitava cisla\n \
-Funkcia '-' odcitava cisla\n \
-Funkcia '*' nasobi cisla\n \
-Funkcia '/' deli cisla\n \
-Funkcia '!' urobi faktorial cisla\n \
-Funkcia '√' odmocni cislo\n \
-Funkcia '^' urobi mocninu cisla\n \
-Funkcia 'C' vymaze panel\n \
-Funkcia '=' vyhodnoti vyraz");
+    QString msg = tr(
+        "                          Napoveda                           \n \
+        Cislice 0-9 zadavaju cisla do panela\n \
+        Funkcia '+' scitava cisla\n \
+        Funkcia '-' odcitava cisla\n \
+        Funkcia '*' nasobi cisla\n \
+        Funkcia '/' deli cisla\n \
+        Funkcia '!' urobi faktorial cisla\n \
+        Funkcia '√' odmocni cislo\n \
+        Funkcia '^' urobi mocninu cisla\n \
+        Funkcia 'C' vymaze panel\n \
+        Funkcia '=' vyhodnoti vyraz"
+    );
     msgBox.setText(msg);
     msgBox.exec();
 }
