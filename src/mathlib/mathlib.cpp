@@ -307,6 +307,23 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
 
 double precedenceAnalysis(list<StackElement> myList){
     
+    int table[8][8]={
+
+    // I       N       P       U       T
+        
+    //   +|- *|/  (   )   i   $   ^   !
+
+        {'R','L','L','R','L','R','L','L'}, // + -                S
+        {'R','R','L','R','L','R','L','L'}, // * / //             T
+        {'L','L','L','I','L','E','L','L'}, // (                  A
+        {'R','R','E','R','E','R','R','R'}, // )                  C
+        {'R','R','E','R','E','R','R','R'}, // i                  K
+        {'L','L','L','E','L','E','L','L'}, // $
+        {'R','R','L','R','L','R','L','L'}, // ^      
+        {'R','R','L','R','L','R','R','R'}  // !           
+    };
+
+
     stack<StackElement> myStack;
     
     StackElement end;

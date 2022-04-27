@@ -1,8 +1,11 @@
+#ifndef MATHLIB_H
+#define MATHLIB_H
+
 /**
  * @file mathlib2.h
  * @author Jakub Skunda (xskund02)
  * @brief Implementation of math library and PSA analysis
- * @version 0.1
+ * @version 0.2
  * @date 2022-04-26
  * 
  * @copyright Copyright (c) 2022
@@ -28,25 +31,7 @@ class StackElement{
         double value;
 };
 
-/**
- * @brief Table for precedence analysis
- * 
- */
-int table[8][8]={
 
-    // I       N       P       U       T
-        
-    //   +|- *|/  (   )   i   $   ^   !
-
-        {'R','L','L','R','L','R','L','L'}, // + -                S
-        {'R','R','L','R','L','R','L','L'}, // * / //             T
-        {'L','L','L','I','L','E','L','L'}, // (                  A
-        {'R','R','E','R','E','R','R','R'}, // )                  C
-        {'R','R','E','R','E','R','R','R'}, // i                  K
-        {'L','L','L','E','L','E','L','L'}, // $
-        {'R','R','L','R','L','R','L','L'}, // ^      
-        {'R','R','L','R','L','R','R','R'}  // !           
-};
 
 // functions for PSA
 
@@ -157,3 +142,5 @@ public:
     double processInput(string vyraz);
 
 };
+
+#endif // MATHLIB_H
