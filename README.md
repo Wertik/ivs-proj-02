@@ -41,6 +41,7 @@ Figma: https://www.figma.com/file/T5BqQWrPt3MQ4FjbT0GfVf/IVS-project-2?node-id=0
 | Šipka vpravo | ) |
 | Šipka nahoru | x<sup>y</sup> |
 | Šipka dolu | √ |
+| Ctrl + C | Zkopírovat obsah displaye |
 
 # Licence
 
