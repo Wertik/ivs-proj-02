@@ -66,6 +66,8 @@ private:
 
 private slots:        
     void press_digit();
+
+    void press_sign();
     void press_simple_operator();
 
     void on_pushButton_clear_released();

@@ -50,11 +50,9 @@ MainWindow::MainWindow(QWidget *parent)
         connect(button, SIGNAL(released()), this, SLOT(press_digit()));
     }
 
-    // And operators that simply append.
+    // Operators that only append.
 
     vector<QPushButton*> simple_operator_buttons = {
-        ui->pushButton_plus,
-        ui->pushButton_minus,
         ui->pushButton_multiply,
         ui->pushButton_divide,
     };
@@ -62,6 +60,18 @@ MainWindow::MainWindow(QWidget *parent)
     for (QPushButton* button : simple_operator_buttons) {
         button->setStyleSheet(button_style);
         connect(button, SIGNAL(released()), this, SLOT(press_simple_operator()));
+    }
+
+    // Signs (plus and minus)
+
+    vector<QPushButton*> sign_operators = {
+        ui->pushButton_plus,
+        ui->pushButton_minus,
+    };
+
+    for (QPushButton* button : sign_operators) {
+        button->setStyleSheet(button_style);
+        connect(button, SIGNAL(released()), this, SLOT(press_sign()));
     }
 
     this->on_pushButton_clear_released();
@@ -149,6 +159,20 @@ void MainWindow::press_digit()
 {
     QPushButton * button = (QPushButton*)sender();
     this->append_digit(button->text());
+}
+
+// Plus and minus
+void MainWindow::press_sign() {
+    QPushButton * button = (QPushButton*)sender();
+
+    if (this->lastToken == OPERATOR || this->lastToken == NONE) {
+        qDebug() << "Last token was operator, not appending.";
+        return;
+    }
+
+    this->append_to_expression(button->text());
+    this->lastToken = OPERATOR;
+    this->stop_number();
 }
 
 // Simply append any operators that don't require any extra work or checks.
