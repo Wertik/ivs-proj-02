@@ -212,6 +212,9 @@
     <property name="text">
      <string>x^y</string>
     </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_6">
     <property name="geometry">
@@ -496,7 +499,7 @@ color: rgb(255, 255, 255);</string>
      <string>C</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_fakt">
+   <widget class="QPushButton" name="pushButton_fact">
     <property name="geometry">
      <rect>
       <x>30</x>

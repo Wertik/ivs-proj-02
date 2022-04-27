@@ -11,9 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Manually connect buttons that append to expression.
+    // Manully connect digit buttons.
 
-    vector<QPushButton*> buttons = {
+    vector<QPushButton*> digit_buttons = {
         ui->pushButton_0,
         ui->pushButton_1,
         ui->pushButton_2,
@@ -24,21 +24,26 @@ MainWindow::MainWindow(QWidget *parent)
         ui->pushButton_7,
         ui->pushButton_8,
         ui->pushButton_9,
-        ui->pushButton_comma,
+    };
+
+    for (const QPushButton* button : digit_buttons) {
+        connect(button, SIGNAL(released()), this, SLOT(press_digit()));
+    }
+
+    // And operators that simply append.
+
+    vector<QPushButton*> simple_operator_buttons = {
         ui->pushButton_plus,
         ui->pushButton_minus,
         ui->pushButton_multiply,
         ui->pushButton_divide,
-        ui->pushButton_power,
-        ui->pushButton_square,
-        ui->pushButton_fakt,
-        ui->pushButton_l_bracket,
-        ui->pushButton_r_bracket
     };
 
-    for (const QPushButton* button : buttons) {
-        connect(button, SIGNAL(released()), this, SLOT(press_button()));
+    for (const QPushButton* button : simple_operator_buttons) {
+        connect(button, SIGNAL(released()), this, SLOT(press_simple_operator()));
     }
+
+    this->on_pushButton_clear_released();
 }
 
 MainWindow::~MainWindow()
@@ -46,29 +51,222 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::press_button()
+void MainWindow::set_expression(QString expr) {
+    ui->label->setText(expr);
+}
+
+void MainWindow::append_to_expression(QString expr, bool force_append) {
+    QString final_expression;
+    if (this->empty && !force_append) {
+        final_expression = expr;
+
+        this->empty = false;
+    } else {
+        final_expression = ui->label->text() + expr;
+
+        if (force_append) {
+            this->empty = false;
+        }
+    }
+
+    this->set_expression(final_expression);
+}
+
+void MainWindow::append_to_expression(QString expr) {
+    this->append_to_expression(expr, false);
+}
+
+void MainWindow::reset() {
+    this->empty = true;
+    this->lastToken = DIGIT;
+    this->paren_count = 0;
+}
+
+void MainWindow::stop_number() {
+    this->building_number = false;
+    this->has_comma = false;
+}
+
+// Slots
+
+// Simply append any digits to the expression.
+void MainWindow::press_digit()
 {
     QPushButton * button = (QPushButton*)sender();
 
-    QString labelStr;
-    if (this->empty) {
-        labelStr = button->text();
-        this->empty = false;
-    } else {
-        labelStr = ui->label->text() + button->text();
+    this->append_to_expression(button->text());
+    this->lastToken = DIGIT;
+    this->building_number = true;
+}
+
+// Simply append any operators that don't require any extra work or checks.
+void MainWindow::press_simple_operator() {
+    QPushButton * button = (QPushButton*)sender();
+
+    if (this->lastToken == OPERATOR || this->lastToken == NONE) {
+        qDebug() << "Last token was operator, not appending.";
+        return;
     }
 
-    ui->label->setText(labelStr);
+    if (this->empty) {
+        qDebug() << "Cannot start with an operator, not appending.";
+        return;
+    }
+
+    this->append_to_expression(button->text());
+    this->lastToken = OPERATOR;
+    this->stop_number();
 }
 
+// Clear
 void MainWindow::on_pushButton_clear_released()
 {
-    ui->label->setText("0");
-    this->empty = true;
+    this->set_expression("0");
+    this->has_comma = false;
+    this->building_number = true;
+    this->reset();
 }
 
+// Evaluate
 void MainWindow::on_pushButton_equal_released()
 {
-    // Evaluate expression and display result here.
+    // Evaluate expression in the display label.
+
+    QString qExpression = ui->label->text();
+
+    double result = this->calc.processInput(qExpression.trimmed().toUtf8().constData());
+
+    QString qResult = QString::number(result, 'g', 12);
+
+    ui->label->setText(qResult);
+
+    if (qResult.contains(".")) {
+        this->has_comma = true;
+    } else {
+        this->has_comma = false;
+    }
+
+    this->lastToken = DIGIT;
+    this->building_number = true;
+}
+
+// Open parenthesses
+void MainWindow::on_pushButton_l_bracket_released()
+{
+    QPushButton * button = (QPushButton*)sender();
+
+    // Can open parenthesses only after operators.
+    if (this->lastToken != OPERATOR && this->empty == false) {
+        qDebug() << "Open parenthesses not after an operator, not appending.";
+        return;
+    }
+
+    this->append_to_expression(button->text());
+    this->lastToken = OPEN_PAREN;
+    this->paren_count++;
+    this->stop_number();
+}
+
+
+// Close parenthesses
+void MainWindow::on_pushButton_r_bracket_released()
+{
+    QPushButton * button = (QPushButton*)sender();
+
+    if (this->paren_count == 0) {
+        qDebug() << "No open parenthesses to close, not appending.";
+        return;
+    }
+
+    // Cannot have an empty parenthesses
+    if (this->lastToken == OPEN_PAREN) {
+        qDebug() << "Empty parenthesses, not appending.";
+        return;
+    }
+
+    // Closing parentheesses with an operator inside.
+    if (this->lastToken == OPERATOR) {
+        qDebug() << "Cannot close after operator.";
+        return;
+    }
+
+    this->append_to_expression(button->text());
+    this->lastToken = CLOSE_PAREN;
+    this->paren_count--;
+    this->stop_number();
+}
+
+
+// Square
+void MainWindow::on_pushButton_square_released()
+{
+    QPushButton * button = (QPushButton*)sender();
+
+    if (this->lastToken == DIGIT && !this->empty) {
+        qDebug() << "Square after digit, not appending.";
+        return;
+    }
+
+    this->append_to_expression(button->text());
+    this->lastToken = OPERATOR;
+    this->stop_number();
+}
+
+
+// Power
+void MainWindow::on_pushButton_power_released()
+{
+    // There has to be a number on the left.
+    if (this->lastToken != DIGIT && this->lastToken != CLOSE_PAREN && this->lastToken != FACT) {
+        qDebug() << "Left side of power invalid, not appending.";
+        return;
+    }
+
+    if (this->empty) {
+        qDebug() << "Cannot start with power, not appending.";
+        return;
+    }
+
+    this->append_to_expression("^");
+    this->lastToken = OPERATOR;
+    this->stop_number();
+}
+
+
+// Factorial
+void MainWindow::on_pushButton_fact_released()
+{
+    // There has to be a number on the left side.
+    if (this->lastToken != DIGIT && this->lastToken != CLOSE_PAREN) {
+        qDebug() << "Left side of fact invalid, not appending.";
+        return;
+    }
+
+    if (this->empty) {
+        qDebug() << "Cannot start with an operator, not appending.";
+        return;
+    }
+
+    this->append_to_expression("!");
+    this->lastToken = FACT;
+    this->stop_number();
+}
+
+
+void MainWindow::on_pushButton_comma_released()
+{
+    if (!this->building_number) {
+        qDebug() << "Cannot insert comma outside a number, not appending.";
+        return;
+    }
+
+    if (this->has_comma) {
+        qDebug() << "Decimal numbers cannot have multiple commas, not appending.";
+        return;
+    }
+
+    this->append_to_expression(".", true);
+    this->lastToken = COMMA;
+    this->has_comma = true;
 }
 
