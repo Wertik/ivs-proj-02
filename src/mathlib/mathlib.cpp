@@ -75,6 +75,19 @@ double myExponent(double nr1, double nr2){
     }
 }
 
+double myRoot(double nr1, double nr2){
+    if(nr1 != lround(nr1))
+		throw std::invalid_argument("nth root, n is not an integer!");
+	if(nr1 < 1)
+		throw std::invalid_argument("nth root, n is lower than 1!");
+	long ln_root = lround(nr1);
+	if(nr2 < 0 && (ln_root % 2) == 0)
+		throw std::invalid_argument("nth root, nr2 cannot be negative if root is even!");
+	if(nr2 < 0)
+		return -std::pow(-nr2,1/nr1);
+	return std::pow(nr2,1/nr1);
+}
+
 double Calculator::processInput(string expression){
     
     list<StackElement> myList;
@@ -84,7 +97,7 @@ double Calculator::processInput(string expression){
     while (i  < expression.length()){
         if((expression[i] >= '0' && expression[i] <= '9')){
 
-            if(i > 0 && expression[i-1] == '-'){
+            if(i > 0 && expression[i-1] == '-' ){
                 
                 if(i == 1 || (i > 1 && (
                     expression[i - 2] == '(' ||
@@ -92,9 +105,26 @@ double Calculator::processInput(string expression){
                     expression[i - 2] == '+' ||
                     expression[i - 2] == '*' ||
                     expression[i - 2] == '/' ||
-                    expression[i - 2] == '^'))){
-                        
+                    expression[i - 2] == '^' ||
+                    expression[i - 2] == '_'))){
+
                 value = "-";
+                myList.pop_back();
+                }
+            }
+
+            else if(i > 0 && expression[i-1] == '+' ){
+                
+                if(i == 1 || (i > 1 && (
+                    expression[i - 2] == '(' ||
+                    expression[i - 2] == '-' ||
+                    expression[i - 2] == '+' ||
+                    expression[i - 2] == '*' ||
+                    expression[i - 2] == '/' ||
+                    expression[i - 2] == '^')||
+                    expression[i - 2] == '_')){
+
+                value = "+";
                 myList.pop_back();
                 }
             }
@@ -138,6 +168,9 @@ double Calculator::processInput(string expression){
             else if(expression[i] == ')'){
                 el->type = "rbracket";
             }
+            else if(expression[i] == '_'){
+                el->type = "root";
+            }
             myList.push_back(*el);
         }
         i++;
@@ -177,6 +210,9 @@ int stackTop(stack<StackElement> myStack){
     else if(myStack.top().type == "factorial"){ 
         return 7;
     }
+    else if(myStack.top().type == "root"){
+        return 8;
+    }
     else if(myStack.top().type == "E-type"){
         StackElement e_type = myStack.top();
         myStack.pop();
@@ -214,6 +250,9 @@ int incomingType(list<StackElement> myList){
     }
     else if(myList.front().type == "factorial"){
         return 7;
+    }
+    else if(myList.front().type == "root"){
+        return 8;
     }
     return -1;
 }
@@ -302,25 +341,41 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
         myStack.top().type = "E-type";
         return myStack;
     }
+
+    else if(stackTop(myStack) == 8){
+        StackElement el1 = myStack.top();
+        myStack.pop();
+        StackElement el2 = myStack.top();
+        myStack.pop();
+        StackElement el3 = myStack.top();
+
+        double outNr;
+        outNr = myRoot(el3.value, el1.value);
+        
+        myStack.top().value = outNr;
+        myStack.top().type = "E-type";
+        return myStack;
+    }
     return myStack;
 }
 
 double precedenceAnalysis(list<StackElement> myList){
     
-    int table[8][8]={
+    int table[9][9]={
 
     // I       N       P       U       T
         
-    //   +|- *|/  (   )   i   $   ^   !
+    //   +|- *|/  (   )   i   $   ^   !   √
 
-        {'R','L','L','R','L','R','L','L'}, // + -                S
-        {'R','R','L','R','L','R','L','L'}, // * / //             T
-        {'L','L','L','I','L','E','L','L'}, // (                  A
-        {'R','R','E','R','E','R','R','R'}, // )                  C
-        {'R','R','E','R','E','R','R','R'}, // i                  K
-        {'L','L','L','E','L','E','L','L'}, // $
-        {'R','R','L','R','L','R','L','L'}, // ^      
-        {'R','R','L','R','L','R','R','R'}  // !           
+        {'R','L','L','R','L','R','L','L','L'}, // + -                S
+        {'R','R','L','R','L','R','L','L','L'}, // * / //             T
+        {'L','L','L','I','L','E','L','L','L'}, // (                  A
+        {'R','R','E','R','E','R','R','R','R'}, // )                  C
+        {'R','R','E','R','E','R','R','R','R'}, // i                  K
+        {'L','L','L','E','L','E','L','L','L'}, // $
+        {'R','R','L','R','L','R','L','L','L'}, // ^      
+        {'R','R','L','R','L','R','R','R','R'}, // !       
+        {'R','R','L','R','L','R','R','L','R'} // √   
     };
 
 

@@ -5,7 +5,7 @@
  * @file mathlib2.h
  * @author Jakub Skunda (xskund02)
  * @brief Implementation of math library and PSA analysis
- * @version 0.2
+ * @version 0.1
  * @date 2022-04-26
  * 
  * @copyright Copyright (c) 2022
@@ -133,6 +133,16 @@ double myFactiorial(double nr);
  * @return 
  */
 double myExponent(double nr1, double nr2);
+
+
+/**
+ * @brief implementation of root function
+ * 
+ * @param nr1 
+ * @param nr2 
+ * @return double 
+ */
+double myRoot(double nr1, double nr2);
 
 
 class Calculator{
