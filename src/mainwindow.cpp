@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QShortcut>
+#include <QClipboard>
 
 using namespace std;
 
@@ -60,6 +61,9 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     this->on_pushButton_clear_released();
+
+    // Add a shortcut for copy
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_C), this, SLOT(copy_result()));
 }
 
 MainWindow::~MainWindow()
@@ -288,5 +292,13 @@ void MainWindow::on_pushButton_comma_released()
     this->append_to_expression(".", true);
     this->lastToken = COMMA;
     this->has_comma = true;
+}
+
+void MainWindow::copy_result()
+{
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    QString content = ui->label->text();
+
+    clipboard->setText(content);
 }
 

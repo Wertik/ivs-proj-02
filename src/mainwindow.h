@@ -61,5 +61,7 @@ private slots:
     void on_pushButton_power_released();
     void on_pushButton_fact_released();
     void on_pushButton_comma_released();
+
+    void copy_result();
 };
 #endif // MAINWINDOW_H
