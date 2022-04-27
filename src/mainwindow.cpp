@@ -186,6 +186,12 @@ void MainWindow::on_pushButton_equal_released()
 
     QString qExpression = ui->label->text();
 
+    // Replace √ with _ (used by the parser for sqrt)
+    // Replace , with . (used in stod instead of a comma)
+    qExpression = qExpression
+            .replace("√", "_")
+            .replace(",", ".");
+
     double result;
 
     try {
@@ -196,6 +202,9 @@ void MainWindow::on_pushButton_equal_released()
     }
 
     QString qResult = QString::number(result, 'g', 12);
+
+    // Replace . back to ,
+    qResult = qResult.replace(".", ",");
 
     ui->label->setText(qResult);
 
@@ -255,14 +264,19 @@ void MainWindow::on_pushButton_r_bracket_released()
     this->stop_number();
 }
 
-
 // Square
 void MainWindow::on_pushButton_square_released()
 {
     QPushButton * button = (QPushButton*)sender();
 
-    if (this->lastToken == DIGIT && !this->empty) {
-        qDebug() << "Square after digit, not appending.";
+    // There has to be a number on the left.
+    if (this->lastToken != DIGIT && this->lastToken != CLOSE_PAREN && this->lastToken != FACT) {
+        qDebug() << "Left side of square invalid, not appending.";
+        return;
+    }
+
+    if (this->empty) {
+        qDebug() << "Cannot start with square, not appending.";
         return;
     }
 
@@ -324,7 +338,7 @@ void MainWindow::on_pushButton_comma_released()
         return;
     }
 
-    this->append_to_expression(".", true);
+    this->append_to_expression(",", true);
     this->lastToken = COMMA;
     this->has_comma = true;
 }
