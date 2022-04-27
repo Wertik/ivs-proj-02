@@ -9,9 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
     ui->setupUi(this);
 
-    // Manully connect digit buttons.
+    // Manually connect digit buttons.
 
     vector<QPushButton*> digit_buttons = {
         ui->pushButton_0,
