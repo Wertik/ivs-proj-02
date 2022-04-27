@@ -31,7 +31,7 @@ class StackElement{
         double value;
 };
 
-enum errorCodes{
+enum errorCode{
     ZERO_DIVISION,
     NEGATIVE_FACTORIAL,
     TOO_LARGE_FACTORIAL,
