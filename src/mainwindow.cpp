@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QShortcut>
 #include <QClipboard>
+#include <QMessageBox>
 
 using namespace std;
 
@@ -300,5 +301,23 @@ void MainWindow::copy_result()
     QString content = ui->label->text();
 
     clipboard->setText(content);
+}
+
+void MainWindow::on_pushButton_hint_clicked()
+{
+    QMessageBox msgBox;
+    QString msg = tr("                          Napoveda                           \n \
+Cislice 0-9 zadavaju cisla do panela\n \
+Funkcia '+' scitava cisla\n \
+Funkcia '-' odcitava cisla\n \
+Funkcia '*' nasobi cisla\n \
+Funkcia '/' deli cisla\n \
+Funkcia '!' urobi faktorial cisla\n \
+Funkcia '√' odmocni cislo\n \
+Funkcia '^' urobi mocninu cisla\n \
+Funkcia 'C' vymaze panel\n \
+Funkcia '=' vyhodnoti vyraz");
+    msgBox.setText(msg);
+    msgBox.exec();
 }
 
