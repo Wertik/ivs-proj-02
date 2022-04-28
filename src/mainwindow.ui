@@ -531,7 +531,7 @@ border: none;</string>
     <property name="font">
      <font>
       <family>Inria Sans Light</family>
-      <pointsize>36</pointsize>
+      <pointsize>24</pointsize>
      </font>
     </property>
     <property name="layoutDirection">
@@ -681,8 +681,8 @@ border: none;</string>
    <widget class="QPushButton" name="pushButton_hint">
     <property name="geometry">
      <rect>
-      <x>11</x>
-      <y>14</y>
+      <x>10</x>
+      <y>10</y>
       <width>31</width>
       <height>21</height>
      </rect>
@@ -693,11 +693,15 @@ border: none;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton{
-border: 1px solid white;
-color: rgb(255, 255, 255);
-border-width: 1px;
-border-radius: 10px;
+     <string notr="true">QPushButton {
+	border: 1px solid white;
+	color: rgb(255, 255, 255);
+	border-width: 1px;
+	border-radius: 10px;
+}
+
+QPushButton:pressed {
+	background-color: #626967;
 }</string>
     </property>
     <property name="text">

@@ -414,6 +414,7 @@ delete - 'C'\n \
 Ctrl + C - Zkropirovanie obsahu displayu\n \
 ");
     msgBox.setText(msg);
+    msgBox.setWindowTitle("Kalkulačka - Nápověda");
     msgBox.setStyleSheet("color: rgb(255, 255, 255); background-color: #6C7673;");
     msgBox.exec();
 }
