@@ -269,11 +269,23 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
     // rule E + E -> E
     // rule E - E -> E
     else if(stackTop(myStack) == 0){
+        if (myStack.size() <= 3){
+            throw WRONG_INPUT;
+        }
+
         StackElement el1 = myStack.top();
         myStack.pop();
+        if(el1.type != "E-type"){
+            throw WRONG_INPUT;
+        }
+
         StackElement el2 = myStack.top();
         myStack.pop();
+
         StackElement el3 = myStack.top();
+        if(el3.type != "E-type"){
+            throw WRONG_INPUT;
+        }
 
         double outNr;
 
@@ -293,11 +305,23 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
     // rule E * E -> E
     // rule E / E -> E
     else if(stackTop(myStack) == 1){
+        if (myStack.size() <= 3){
+            throw WRONG_INPUT;
+        }
+
         StackElement el1 = myStack.top();
         myStack.pop();
+        if(el1.type != "E-type"){
+            throw WRONG_INPUT;
+        }
+
         StackElement el2 = myStack.top();
         myStack.pop();
+        
         StackElement el3 = myStack.top();
+        if(el3.type != "E-type"){
+            throw WRONG_INPUT;
+        }
 
         double outNr;
 
@@ -314,11 +338,23 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
 
     // rule E ^ E -> E
     else if(stackTop(myStack) == 6){
+        if (myStack.size() <= 3){
+            throw WRONG_INPUT;
+        }
+
         StackElement el1 = myStack.top();
         myStack.pop();
+        if(el1.type != "E-type"){
+            throw WRONG_INPUT;
+        }
+
         StackElement el2 = myStack.top();
         myStack.pop();
+        
         StackElement el3 = myStack.top();
+        if(el3.type != "E-type"){
+            throw WRONG_INPUT;
+        }
 
         double outNr;
         outNr = myExponent(el3.value, el1.value);
@@ -330,9 +366,17 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
 
     // rule E! -> E
     else if(stackTop(myStack) == 7){
+        if (myStack.size() <= 2){
+            throw WRONG_INPUT;
+        }
+        
         StackElement el1 = myStack.top();
         myStack.pop();
+        
         StackElement el2 = myStack.top();
+        if(el2.type != "E-type"){
+            throw WRONG_INPUT;
+        }
 
         double outNr;
         outNr = myFactiorial(el2.value);
@@ -342,12 +386,25 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack){
         return myStack;
     }
 
+    // E √ E -> E
     else if(stackTop(myStack) == 8){
+        if (myStack.size() <= 3){
+            throw WRONG_INPUT;
+        }
+
         StackElement el1 = myStack.top();
         myStack.pop();
+        if(el1.type != "E-type"){
+            throw WRONG_INPUT;
+        }
+
         StackElement el2 = myStack.top();
         myStack.pop();
+        
         StackElement el3 = myStack.top();
+        if(el3.type != "E-type"){
+            throw WRONG_INPUT;
+        }
 
         double outNr;
         outNr = myRoot(el3.value, el1.value);

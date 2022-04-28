@@ -40,6 +40,7 @@ enum ErrorCode{
     ROOT_NR_LESS_THAN_1,
     ROOT_EVEN_NR_NEGATIVE,
     PSA_ERROR,
+    WRONG_INPUT,
 };
 
 // functions for PSA
