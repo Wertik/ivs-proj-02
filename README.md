@@ -73,7 +73,7 @@ Sestavení je možné pouze na platformě linux.
 
 Jsou nutné apt balíčky ``make, cmake, g++, qt5-default``.
 
-Příkaz pro instalaci všech:
+Příkaz pro instalaci balíčků:
 ```
 sudo apt install make
 sudo apt install cmake
