@@ -1,3 +1,8 @@
+<p align="center" style="font-size: 42px;">
+    <img src="./assets/icon/icon-128.png"><br />
+    Kalkulačka
+</p>
+
 # Prostředí
 
 - Ubuntu 64bit
@@ -42,6 +47,7 @@ Figma: https://www.figma.com/file/T5BqQWrPt3MQ4FjbT0GfVf/IVS-project-2?node-id=0
 | Šipka nahoru | x<sup>y</sup> |
 | Šipka dolu | √ |
 | Ctrl + C | Zkopírovat obsah displaye |
+| Delete | Vymázání displaye |
 
 # Instalace
 
