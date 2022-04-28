@@ -11,7 +11,8 @@ Program podporuje pouze operační systém Ubuntu 64bit.
 
 ## Stáhnutí balíčku
 
-Aktuální ``calc.deb`` můžete stáhnout v [releases](https://github.com/Wertik/ivs-proj-02/releases).
+Aktuální ``calc_VERSION_all.deb`` můžete stáhnout v [releases](https://github.com/Wertik/ivs-proj-02/releases).
+(``VERSION`` bude aktuální verze aplikace.)
 
 ## Instalace pomocí Ubuntu Software Install
 
@@ -22,9 +23,10 @@ Po kliknutí na ``Install`` se aplikace nainstaluje.
 
 ## Instalace přes terminál
 
-Ve složce se souborem ``calc.deb`` pomocí příkazu:
+Ve složce se souborem ``calc_VERSION_all.deb`` pomocí příkazu:
 ```
-sudo dpkg -i calc.deb
+sudo dpkg -i calc_VERSION_all.deb
+sudo apt --fix-broken install
 ```
 
 ---
@@ -60,9 +62,7 @@ sudo apt-get remove calculator
 
 Manuální vymazání všech souborů spojených s aplikací:
 ```
-rm /usr/local/bin/calc
-rm /usr/share/applications/calc.desktop
-rm /opt/calc/calc.png
+rm /usr/local/bin/calc /usr/share/applications/calc.desktop /opt/calc/calc.png
 ```
 
 # Sestavení ze zdroje
@@ -73,12 +73,14 @@ Sestavení je možné pouze na platformě linux.
 
 Jsou nutné apt balíčky ``make, cmake, g++, qt5-default``.
 
-Příkaz pro instalaci balíčků:
+Nejdříve aktualizace systému...
 ```
-sudo apt install make
-sudo apt install cmake
-sudo apt install g++
-sudo apt install qt5-default
+sudo apt update
+```
+---
+Instalace potřebných balíčků
+```
+sudo apt install make cmake g++ qt5-default
 ```
 ---
 
@@ -110,7 +112,7 @@ Vytvoření balíčku
 ```
 make install
 ```
-Vytvoří balíček ``calc.deb`` ve složce ``packages/``
+Vytvoří balíček ``calc_VERSION_all.deb`` ve složce ``packages/``
 
 # Klávesové zkratky
 
