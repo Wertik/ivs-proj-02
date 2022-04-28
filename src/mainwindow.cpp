@@ -385,7 +385,7 @@ Funkcia '-' odcitava cisla (pouzitie -> x-y)\n \
 Funkcia '*' nasobi cisla (pouzitie -> x*y)\n \
 Funkcia '/' deli cisla (pouzitie -> x/y)\n \
 Funkcia '!' urobi faktorial cisla (pouzitie -> !x)\n \
-Funkcia '√' odmocni cislo (pouzitie -> √x)\n \
+Funkcia '√' odmocni cislo (pouzitie -> y√x)\n \
 Funkcia '^' urobi mocninu cisla (pouzitue -> x^y)\n \
 Funkcia 'C' vymaze panel\n \
 Funkcia '=' vyhodnoti vyraz\n \
