@@ -375,7 +375,7 @@ void MainWindow::copy_result()
     clipboard->setText(content);
 }
 
-void MainWindow::on_pushButton_hint_clicked()
+void MainWindow::on_pushButton_hint_released()
 {
     QMessageBox msgBox;
     QString msg = tr("                          Napoveda                           \n \
