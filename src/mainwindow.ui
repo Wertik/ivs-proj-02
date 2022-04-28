@@ -531,7 +531,7 @@ border: none;</string>
     <property name="font">
      <font>
       <family>Inria Sans Light</family>
-      <pointsize>24</pointsize>
+      <pointsize>36</pointsize>
      </font>
     </property>
     <property name="layoutDirection">
