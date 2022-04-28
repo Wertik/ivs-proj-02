@@ -13,7 +13,7 @@ PACK_DIR="./$PACK_NAME"
 BIN="$PACK_DIR/usr/local/bin"
 OPT="$PACK_DIR/opt/$PACK_NAME"
 DEBIAN="$PACK_DIR/DEBIAN"
-APPS="$PACK_DIR/user/share/applications"
+APPS="$PACK_DIR/usr/share/applications"
 
 BUILD="$HOME_DIR/build"
 ASSETS="$HOME_DIR/assets"
