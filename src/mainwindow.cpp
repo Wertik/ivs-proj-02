@@ -156,7 +156,7 @@ void MainWindow::display_error(int error_code) {
         error_message = error_messages[error_code];
     }
 
-    this->set_display("ERR: " + error_message, true);
+    this->set_display("ERR " + QString::number(error_code, 10, 0) + ": " + error_message, true);
 
     this->lastToken = NONE;
     this->empty = true;
@@ -313,7 +313,7 @@ void MainWindow::on_pushButton_equal_released()
         return;
     }
 
-    QString qResult = QString::number(result, 'g', 12);
+    QString qResult = QString::number(result, 'g', 16);
 
     // Replace . back to ,
     qResult = qResult.replace(".", ",");
@@ -491,20 +491,22 @@ void MainWindow::on_pushButton_hint_released()
 {
     QMessageBox msgBox;
     QString msg = tr(
-        "<h1>Nápověda</h1> \
-         <h2>Tlačítka</h2> \
+        "\
+        <h2>Nápověda</h2> <table><tr><td> \
+        <h3>Tlačítka</h3> \
         Číslice 0-9 zadávají čisla do displaye<br /> \
-        Funkce '+' sčítá čísla (použití -> x+y)<br /> \
-        Funkce '-' odčitáva čísla (použití -> x-y)<br /> \
-        Funkce '*' nasobí čísla (použití -> x*y)<br /> \
-        Funkce '/' dělí čísla (použití -> x/y)<br /> \
-        Funkce '!' urobí faktoriál čísla (použití -> !x)<br /> \
-        Funkce '√' odmocní čislo (použití -> y√x)<br /> \
-        Funkce '^' urobí mocninu čísla (použití -> x^y)<br /> \
+        Funkce '+' sčítání (použití -> x+y)<br /> \
+        Funkce '-' odčítání a znaménko (použití -> x-y, nebo -x)<br /> \
+        Funkce '*' nasobení (použití -> x*y)<br /> \
+        Funkce '/' dělení (použití -> x/y)<br /> Nelze dělit nulou! \
+        Funkce '!' faktoriál čísla (použití -> x!)<br /> Faktoriál pouze z kladného čísla. Limit: 20! \
+        Funkce '√' odmocnina (použití -> y√x)<br /> y musí být nezáporné celé číslo. \
+        Funkce '^' mocnina (použití -> x^y)<br /> \
         Funkce 'C' vymaže display<br /> \
-        Funkce '=' vyhodnoti vyraz \
+        Funkce '=' vyhodnotí výraz \
+        Funkce ',' desetinná čárka \
         \
-        <h2>Klávesové zkratky</h2> \
+        <h3>Klávesové zkratky</h3> \
         <style>table { border-collapse: collapse; } td { text-align: left; } tr { border-bottom: 1pt solid white; }</style>  \
         <table>\
             <tr><th>Zkratka</th><th>Akce</th></tr> \
@@ -530,15 +532,29 @@ void MainWindow::on_pushButton_hint_released()
             <tr><td>Šipka dolu</td> <td>Odmocnina</td></tr> \
             <tr><td>Ctrl + C</td> <td>Zkopírování hodnoty z displaye</td></tr> \
             <tr><td>Delete</td> <td>Vymazání displaye</td></tr> \
-            <tr><td><span style=\"color: #6C7673;\">-------------------</span></td><td><span style=\"color: #6C7673;\">--------------------</span></td></tr>\
-        </table> \
-        \
+            <tr><td><span style=\"color: #6C7673;\">-------------------</span></td><td><span style=\"color: #6C7673;\">---------</span></td></tr>\
+        </table></td><td> \
+        <h3>Chyby</h3> \
+        <h4>ERR 0: Dělení nulou</h4><p>Dělení nulou v oboru reálných čísel není možné, Chuck Norris v kalkulačce není.</p>  \
+        <h4>ERR 1: Záporný faktoriál</h4><p>Faktoriál záporného čísla není.</p>  \
+        <h4>ERR 2: Faktoriál přetekl</h4><p>Aplikace narazila na faktoriál čísla většího než 20.</p>  \
+        <h4>ERR 3: Faktoriál není celé číslo</h4><p>Aplikace narazila na faktoriál desetinného čísla.</p>  \
+        <h4>ERR 4: Odmocnitel není celé číslo</h4><p>Aplikace narazila na odmocninu y√x, kde y je desetinné číslo.</p>  \
+        <h4>ERR 5: Odmocnitel menší než 1</h4><p>Aplikace narazila na odmocninu y√x, kde y menší než 1.</p>  \
+        <h4>ERR 6: Záporná odmocnina</h4><p>Aplikace narazila na odmocninu y√x, kde x záporné a y je sudé číslo.</p>  \
+        <h4>ERR 7: Nelze zpracovat výraz</h4><p>Aplikace narazila nachybu ve zpracování výrazu. Pardon, naše chyba.</p>  \
+        <h4>ERR 8: Chybné zadání</h4><p>Chyba zadání výrazu. Vaše chyba, očekávám omluvu.</p></td></tr></table>  \
         <br /><br />\
-        Aplikace vytvořena v rámci projektu předmětu IVS, VUT FIT.<br />\
-        CMYK Team, 28. 4. 2022 \
+        <p style=\"text-align: center;\">Aplikace vytvořena v rámci projektu předmětu IVS, VUT FIT.<br />\
+        CMYK Team, 28. 4. 2022</p> \
     ");
     msgBox.setText(msg);
     msgBox.setWindowTitle("Kalkulačka - Nápověda");
-    msgBox.setStyleSheet("color: #F4EAEA; background-color: #6C7673; font-size: 14px;");
+    msgBox.setStyleSheet("\
+        QLabel { min-width: 700px; color: #F4EAEA; font-size: 14px; }\
+        QMessageBox { background-color: #6C7673; } \
+        QPushButton { border: 1px solid #F4EAEA; border-radius: 4px; color: #F4EAEA; font-size: 14px; font-weight: bold; padding: 4px 12px; } \
+        QPushButton:pressed { background-color: #B5B5B5; }\
+    ");
     msgBox.exec();
 }
