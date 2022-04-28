@@ -27,10 +27,10 @@ const QString error_messages[ERROR_MESSAGES] {
     "Faktoriál přetekl",
     "Faktoriál není celé číslo",
     "Odmocnitel není celé číslo",
-    "ROOT_NR_LESS_THAN_1",
-    "ROOT_EVEN_NR_NEGATIVE",
+    "Odmocnitel menší než 1",
+    "Záporná odmocnina",
     "Nelze zpracovat výraz",
-    "Chybný výraz"
+    "Chybné zadání"
 };
 
 // The lowest font size
