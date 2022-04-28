@@ -63,6 +63,10 @@ Ve složce se souborem ``calc.deb`` pomocí příkazu:
 dpkg -i calc.deb
 ```
 
+---
+Po dokončení instalace se aplikace objeví v ``Applications`` menu. \
+![applications](assets/applications.png)
+
 # Odinstalace
 
 ## Package manager (UI)
