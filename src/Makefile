@@ -1,5 +1,6 @@
 VERSION=1.0.0
-ZIP=xkucik00_xotrad00_xskund02_xvince01.zip
+NAME=xkucik00_xotrad00_xskund02_xvince01
+ZIP=$(NAME).zip
 
 .PHONY: all calc pack clean test doc run install
 
@@ -8,14 +9,17 @@ all: calc profile
 setup:
 	sudo apt-get install qt5-default
 	sudo apt-get install libgtest-dev
+	sudo apt-get install doxygen
 
 calc:
 	cmake -B../build -S. && cd ../build && make
 
 pack: clean
-	mkdir -p ../../repo && cp -a ../. ../../repo
-	cd ../.. && zip -r $(ZIP) repo
-	cd ../.. && rm -rf repo
+	mkdir -p ../../$(NAME)/repo && cp -a ../. ../../$(NAME)/repo
+	mkdir -p ../../$(NAME)/doc
+	mkdir -p ../../$(NAME)/install
+	cd ../.. && zip -r $(ZIP) $(NAME)
+	cd ../.. && rm -rf $(NAME)
 
 clean:
 	rm -rf ../build
