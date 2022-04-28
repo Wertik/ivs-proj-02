@@ -126,7 +126,7 @@ Přeložení
 make all
 ```
 
-Spustitelný soubor ``calc`` se vytvoří ve složce ``ivs-proj-02/build/``. \
+Spustitelný soubor ``calc`` se vytvoří ve složce ``build/``. \
 Aplikaci rovnou spustíte příkazem ```make run```.
 
 # Vytvoření debian balíčku (.deb)
@@ -141,16 +141,11 @@ Přesunutí do složky s Makefile
 cd ivs-proj-02/src/
 ```
 
-Přeložení
-```
-make all
-```
-
 Vytvoření balíčku
 ```
 make install
 ```
-Vytvoří balíček ``calc.deb`` ve složce ``src/install/``
+Vytvoří balíček ``calc.deb`` ve složce ``packages/``
 
 # Licence
 
