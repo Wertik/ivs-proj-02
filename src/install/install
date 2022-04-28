@@ -13,6 +13,7 @@ fi
 
 HOME_DIR="../.."
 
+FULL_NAME="$PACK_NAME""_""$VERSION""_all.deb"
 PACK_DIR="./$HOME_DIR/packages/$PACK_NAME"
 
 BIN="$PACK_DIR/usr/local/bin"
@@ -51,4 +52,4 @@ chmod 0755 "$DEBIAN/control"
 
 # Build the package
 
-dpkg-deb --build --root-owner-group "$PACK_DIR"
+dpkg-deb --build --root-owner-group "$PACK_DIR" "$PACK_DIR/$FULL_NAME"

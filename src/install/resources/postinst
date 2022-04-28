@@ -1,2 +1,4 @@
 #!/bin/bash
+
+# Install desktop entry
 desktop-file-install /usr/share/applications/calc.desktop
