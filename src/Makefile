@@ -7,6 +7,7 @@ all: calc
 
 setup:
 	sudo apt-get install qt5-default
+	sudo apt-get install libgtest-dev
 
 calc:
 	cmake -B../build -S. && cd ../build && make
@@ -21,6 +22,7 @@ clean:
 	rm -rf doxygen-gen
 	cd install && ./clean
 	cd tests && rm -rf runTests cmake_install.cmake CMakeCache.txt Makefile
+	cd profiling && rm -rf stddev gmon.out
 
 test:
 	cd tests && cmake CMakeLists.txt && make && ./runTests
@@ -31,5 +33,9 @@ doc:
 run:
 	cmake -B../build -S. && cd ../build && make && ./calc
 
+profile: profiling/profiling.cpp mathlib/mathlib.*
+	g++ -pg -g -o profiling/stddev $^
+	cd profiling && ./stddev < data_10
+
 install: calc
-	cd install && ./install calc $(VERSION)
+	cd install && ./install $< $(VERSION)
