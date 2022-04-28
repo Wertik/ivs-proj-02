@@ -19,7 +19,7 @@ enum Token {
 };
 
 // Avoid segfault in case someone forgot to add a message after adding a new error code.
-#define ERROR_MESSAGES 8
+#define ERROR_MESSAGES 9
 
 const QString error_messages[ERROR_MESSAGES] {
     "Dělení nulou",
@@ -29,7 +29,8 @@ const QString error_messages[ERROR_MESSAGES] {
     "Odmocnitel není celé číslo",
     "ROOT_NR_LESS_THAN_1",
     "ROOT_EVEN_NR_NEGATIVE",
-    "Nelze zpracovat výraz"
+    "Nelze zpracovat výraz",
+    "Chybný výraz"
 };
 
 class MainWindow : public QMainWindow
