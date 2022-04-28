@@ -34,15 +34,15 @@ const QString error_messages[ERROR_MESSAGES] {
 };
 
 // The lowest font size
-#define FONT_MIN 20
+#define FONT_MIN 18
 // Font size decrease per width step
 #define FONT_STEP 2
 // When to start shrinking the font
-#define CHARACTER_THRESHOLD 16
+#define CHARACTER_THRESHOLD 15
 // Default font size
 #define FONT_DEFAULT 36
 // Maximum number of characters
-#define CHARACTER_LIMIT 31
+#define CHARACTER_LIMIT 30
 
 class MainWindow : public QMainWindow
 {
