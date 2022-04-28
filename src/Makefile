@@ -1,4 +1,4 @@
-VERSION=1.0.0
+VERSION=1.1.0
 ZIP=xkucik00_xotrad00_xskund02_xvince01.zip
 
 .PHONY: all calc pack clean test doc run install
