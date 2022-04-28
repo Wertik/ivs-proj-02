@@ -531,7 +531,7 @@ border: none;</string>
     <property name="font">
      <font>
       <family>Inria Sans Light</family>
-      <pointsize>36</pointsize>
+      <pointsize>24</pointsize>
      </font>
     </property>
     <property name="layoutDirection">
@@ -678,7 +678,7 @@ border: none;</string>
      <string>y</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_hint">
     <property name="geometry">
      <rect>
       <x>10</x>

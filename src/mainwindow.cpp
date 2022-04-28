@@ -8,6 +8,9 @@
 
 using namespace std;
 
+#define STYLE_DISPLAY_DEFAULT "background-color: #444A49; color: #F4EAEA; border-radius: 10px;"
+#define STYLE_DISPLAY_ERROR "background-color: #444A49; color: #F99494; border-radius: 10px;"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -47,11 +50,9 @@ MainWindow::MainWindow(QWidget *parent)
         connect(button, SIGNAL(released()), this, SLOT(press_digit()));
     }
 
-    // And operators that simply append.
+    // Operators that only append.
 
     vector<QPushButton*> simple_operator_buttons = {
-        ui->pushButton_plus,
-        ui->pushButton_minus,
         ui->pushButton_multiply,
         ui->pushButton_divide,
     };
@@ -59,6 +60,18 @@ MainWindow::MainWindow(QWidget *parent)
     for (QPushButton* button : simple_operator_buttons) {
         button->setStyleSheet(button_style);
         connect(button, SIGNAL(released()), this, SLOT(press_simple_operator()));
+    }
+
+    // Signs (plus and minus)
+
+    vector<QPushButton*> sign_operators = {
+        ui->pushButton_plus,
+        ui->pushButton_minus,
+    };
+
+    for (QPushButton* button : sign_operators) {
+        button->setStyleSheet(button_style);
+        connect(button, SIGNAL(released()), this, SLOT(press_sign()));
     }
 
     this->on_pushButton_clear_released();
@@ -72,8 +85,32 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::set_expression(QString expr) {
+void MainWindow::set_display(QString expr) {
+    if (this->lastToken == NONE) {
+        ui->label->setStyleSheet(STYLE_DISPLAY_DEFAULT);
+    }
+
     ui->label->setText(expr);
+}
+
+void MainWindow::display_error(int error_code) {
+    qDebug() << "Error code:" << error_code;
+
+    QString error_message;
+
+    if (error_code >= ERROR_MESSAGES) {
+        qDebug() << "No messagee for error code" << error_code;
+        error_message = "err code " + QString::number(error_code, 10);
+    } else {
+        error_message = error_messages[error_code];
+    }
+
+    ui->label->setStyleSheet(STYLE_DISPLAY_ERROR);
+    this->set_display("ERR: " + error_message);
+
+    this->lastToken = NONE;
+    this->empty = true;
+    this->stop_number();
 }
 
 void MainWindow::append_to_expression(QString expr, bool force_append) {
@@ -90,7 +127,7 @@ void MainWindow::append_to_expression(QString expr, bool force_append) {
         }
     }
 
-    this->set_expression(final_expression);
+    this->set_display(final_expression);
 }
 
 void MainWindow::append_to_expression(QString expr) {
@@ -124,6 +161,20 @@ void MainWindow::press_digit()
     this->append_digit(button->text());
 }
 
+// Plus and minus
+void MainWindow::press_sign() {
+    QPushButton * button = (QPushButton*)sender();
+
+    if (this->lastToken == OPERATOR || this->lastToken == NONE) {
+        qDebug() << "Last token was operator, not appending.";
+        return;
+    }
+
+    this->append_to_expression(button->text());
+    this->lastToken = OPERATOR;
+    this->stop_number();
+}
+
 // Simply append any operators that don't require any extra work or checks.
 void MainWindow::press_simple_operator() {
     QPushButton * button = (QPushButton*)sender();
@@ -146,7 +197,7 @@ void MainWindow::press_simple_operator() {
 // Clear
 void MainWindow::on_pushButton_clear_released()
 {
-    this->set_expression("0");
+    this->set_display("0");
     this->has_comma = false;
     this->building_number = true;
     this->reset();
@@ -159,9 +210,25 @@ void MainWindow::on_pushButton_equal_released()
 
     QString qExpression = ui->label->text();
 
-    double result = this->calc.processInput(qExpression.trimmed().toUtf8().constData());
+    // Replace √ with _ (used by the parser for sqrt)
+    // Replace , with . (used in stod instead of a comma)
+    qExpression = qExpression
+            .replace("√", "_")
+            .replace(",", ".");
+
+    double result;
+
+    try {
+        result = this->calc.processInput(qExpression.trimmed().toUtf8().constData());
+    } catch (ErrorCode error_code) {
+        this->display_error(error_code);
+        return;
+    }
 
     QString qResult = QString::number(result, 'g', 12);
+
+    // Replace . back to ,
+    qResult = qResult.replace(".", ",");
 
     ui->label->setText(qResult);
 
@@ -221,14 +288,19 @@ void MainWindow::on_pushButton_r_bracket_released()
     this->stop_number();
 }
 
-
 // Square
 void MainWindow::on_pushButton_square_released()
 {
     QPushButton * button = (QPushButton*)sender();
 
-    if (this->lastToken == DIGIT && !this->empty) {
-        qDebug() << "Square after digit, not appending.";
+    // There has to be a number on the left.
+    if (this->lastToken != DIGIT && this->lastToken != CLOSE_PAREN && this->lastToken != FACT) {
+        qDebug() << "Left side of square invalid, not appending.";
+        return;
+    }
+
+    if (this->empty) {
+        qDebug() << "Cannot start with square, not appending.";
         return;
     }
 
@@ -290,7 +362,7 @@ void MainWindow::on_pushButton_comma_released()
         return;
     }
 
-    this->append_to_expression(".", true);
+    this->append_to_expression(",", true);
     this->lastToken = COMMA;
     this->has_comma = true;
 }
@@ -303,20 +375,22 @@ void MainWindow::copy_result()
     clipboard->setText(content);
 }
 
-void MainWindow::on_pushButton_hint_clicked()
+void MainWindow::on_pushButton_hint_released()
 {
     QMessageBox msgBox;
-    QString msg = tr("                          Napoveda                           \n \
-Cislice 0-9 zadavaju cisla do panela\n \
-Funkcia '+' scitava cisla\n \
-Funkcia '-' odcitava cisla\n \
-Funkcia '*' nasobi cisla\n \
-Funkcia '/' deli cisla\n \
-Funkcia '!' urobi faktorial cisla\n \
-Funkcia '√' odmocni cislo\n \
-Funkcia '^' urobi mocninu cisla\n \
-Funkcia 'C' vymaze panel\n \
-Funkcia '=' vyhodnoti vyraz");
+    QString msg = tr(
+        "                          Napoveda                           \n \
+        Cislice 0-9 zadavaju cisla do panela\n \
+        Funkcia '+' scitava cisla\n \
+        Funkcia '-' odcitava cisla\n \
+        Funkcia '*' nasobi cisla\n \
+        Funkcia '/' deli cisla\n \
+        Funkcia '!' urobi faktorial cisla\n \
+        Funkcia '√' odmocni cislo\n \
+        Funkcia '^' urobi mocninu cisla\n \
+        Funkcia 'C' vymaze panel\n \
+        Funkcia '=' vyhodnoti vyraz"
+    );
     msgBox.setText(msg);
     msgBox.exec();
 }

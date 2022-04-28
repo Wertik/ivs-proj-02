@@ -6,12 +6,12 @@
 
 CMYK Team
 
-| Login | Jméno |
-|--|--|
-| xkucik00 | Kučík Adam |
-| xotrad00 | Otradovec Martin |
-| xskund02 | Škunda Jakub |
-| xvince01 | Vincenc Lukáš |
+| Login | Jméno | Github |
+|--|--|--|
+| xkucik00 | Kučík Adam | [@Adam-K2](https://github.com/Adam-K2) |
+| xotrad00 | Otradovec Martin | [@Wertik](https://github.com/Wertik) | 
+| xskund02 | Škunda Jakub | [@jakubskunda](https://github.com/jakubskunda) |
+| xvince01 | Vincenc Lukáš | [@gunter-dev](https://github.com/gunter-dev) |
 
 # Návrh UI
 

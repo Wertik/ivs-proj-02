@@ -15,7 +15,21 @@ enum Token {
    FACT,
    OPEN_PAREN,
    CLOSE_PAREN,
-   COMMA
+   COMMA,
+};
+
+// Avoid segfault in case someone forgot to add a message after adding a new error code.
+#define ERROR_MESSAGES 8
+
+const QString error_messages[ERROR_MESSAGES] {
+    "Dělení nulou",
+    "Záporný faktoriál",
+    "Faktoriál přetekl",
+    "Faktoriál není celé číslo",
+    "Odmocnitel není celé číslo",
+    "ROOT_NR_LESS_THAN_1",
+    "ROOT_EVEN_NR_NEGATIVE",
+    "Nelze zpracovat výraz"
 };
 
 class MainWindow : public QMainWindow
@@ -39,7 +53,10 @@ private:
     // Count the number of open parenthesses.
     int paren_count = 0;
 
-    void set_expression(QString expr);
+    void set_display(QString expr);
+
+    void display_error(int error_code);
+
     void append_to_expression(QString expr, bool force_append);
     void append_to_expression(QString expr);
     void append_digit(QString digit);
@@ -49,6 +66,8 @@ private:
 
 private slots:        
     void press_digit();
+
+    void press_sign();
     void press_simple_operator();
 
     void on_pushButton_clear_released();
@@ -63,6 +82,6 @@ private slots:
     void on_pushButton_comma_released();
 
     void copy_result();
-    void on_pushButton_hint_clicked();
+    void on_pushButton_hint_released();
 };
 #endif // MAINWINDOW_H
