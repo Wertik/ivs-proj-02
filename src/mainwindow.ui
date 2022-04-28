@@ -681,17 +681,23 @@ border: none;</string>
    <widget class="QPushButton" name="pushButton_hint">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>91</width>
-      <height>25</height>
+      <x>11</x>
+      <y>14</y>
+      <width>41</width>
+      <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">border: 1px solid white;
+color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
-     <string>Napoveda</string>
+     <string>?</string>
     </property>
    </widget>
   </widget>
