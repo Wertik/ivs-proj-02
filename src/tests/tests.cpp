@@ -55,8 +55,10 @@ TEST_F(Math_test, plus){
     EXPECT_EQ(math.processInput("1000000+1000000"), 2000000);
     EXPECT_EQ(math.processInput("1000000+1000000+1000000"), 3000000);
     EXPECT_EQ(math.processInput("-1+1"), 0);
+    EXPECT_EQ(math.processInput("1+-1"), 0);
     EXPECT_EQ(math.processInput("-11+111"), 100);
     EXPECT_EQ(math.processInput("-11+0"), -11);
+    EXPECT_EQ(math.processInput("+2"), 2);
 
     // float
     EXPECT_EQ(math.processInput("1+0.1"), 1.1);
@@ -79,6 +81,7 @@ TEST_F(Math_test, minus){
     EXPECT_EQ(math.processInput("76-26"), 50);
     EXPECT_EQ(math.processInput("1000000-1000000"), 0);
     EXPECT_EQ(math.processInput("1000000-1000000-1000000"), -1000000);
+    EXPECT_EQ(math.processInput("-2"), -2);
 
     // float
     EXPECT_EQ(math.processInput("1-0.1"), 0.9);
