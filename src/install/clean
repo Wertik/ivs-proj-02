@@ -1,0 +1,9 @@
+#!/bin/bash
+
+PACK_DIR="$1"
+
+if [ -z "$PACK_DIR" ]; then
+    PACK_DIR="calc"
+fi
+
+rm -rf "$1"
