@@ -3,7 +3,7 @@ ZIP=xkucik00_xotrad00_xskund02_xvince01.zip
 
 .PHONY: all calc pack clean test doc run install
 
-all: calc
+all: calc profile
 
 setup:
 	sudo apt-get install qt5-default
@@ -21,7 +21,7 @@ clean:
 	rm -rf ../build
 	rm -rf doxygen-gen
 	cd install && ./clean
-	cd tests && rm -rf runTests cmake_install.cmake CMakeCache.txt Makefile
+	cd tests && rm -rf CMakeFiles runTests cmake_install.cmake CMakeCache.txt Makefile
 	cd profiling && rm -rf stddev gmon.out
 
 test:
@@ -35,7 +35,6 @@ run:
 
 profile: profiling/profiling.cpp mathlib/mathlib.*
 	g++ -pg -g -o profiling/stddev $^
-	cd profiling && ./stddev < data_10
 
 install: calc
 	cd install && ./install $< $(VERSION)
