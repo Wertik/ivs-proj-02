@@ -20,13 +20,30 @@ class Math_test : public ::testing::Test{
 TEST_F(Math_test, badInput){
     EXPECT_ANY_THROW(math.processInput("2*"));
     EXPECT_ANY_THROW(math.processInput("2+"));
+    EXPECT_ANY_THROW(math.processInput("2-"));
     EXPECT_ANY_THROW(math.processInput("2/"));
+
+    EXPECT_ANY_THROW(math.processInput("*2"));
+    EXPECT_ANY_THROW(math.processInput("+2"));
+    EXPECT_ANY_THROW(math.processInput("-2"));
+    EXPECT_ANY_THROW(math.processInput("/2"));
+
     EXPECT_ANY_THROW(math.processInput("(2*"));
     EXPECT_ANY_THROW(math.processInput("(2"));
     EXPECT_ANY_THROW(math.processInput("2)"));
     EXPECT_ANY_THROW(math.processInput("2*)"));
     EXPECT_ANY_THROW(math.processInput("2+)"));
     EXPECT_ANY_THROW(math.processInput("2/)"));
+
+    EXPECT_ANY_THROW(math.processInput("("));
+    EXPECT_ANY_THROW(math.processInput(")2"));
+    EXPECT_ANY_THROW(math.processInput("*"));
+    EXPECT_ANY_THROW(math.processInput("+"));
+    EXPECT_ANY_THROW(math.processInput("-"));
+    EXPECT_ANY_THROW(math.processInput("/"));
+
+    EXPECT_ANY_THROW(math.processInput("2+-2"))
+    EXPECT_ANY_THROW(math.processInput("2*/2"))
 }
 
 
