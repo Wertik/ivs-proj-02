@@ -1,7 +1,7 @@
 VERSION=1.0.0
 ZIP=xkucik00_xotrad00_xskund02_xvince01.zip
 
-.PHONY: all calc pack clean doc run install
+.PHONY: all calc pack clean test doc run install
 
 all: calc
 
@@ -20,6 +20,10 @@ clean:
 	rm -rf ../build
 	rm -rf doxygen-gen
 	cd install && ./clean
+	cd tests && rm -rf runTests cmake_install.cmake CMakeCache.txt Makefile
+
+test:
+	cd tests && cmake CMakeLists.txt && make && ./runTests
 
 doc:
 	doxygen Doxyfile
