@@ -11,6 +11,10 @@ using namespace std;
 #define STYLE_DISPLAY_DEFAULT "background-color: #444A49; color: #F4EAEA; border-radius: 10px;"
 #define STYLE_DISPLAY_ERROR "background-color: #444A49; color: #F99494; border-radius: 10px;"
 
+/**
+ * @brief MainWindow function
+ * @param parent
+ */
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -80,11 +84,18 @@ MainWindow::MainWindow(QWidget *parent)
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_C), this, SLOT(copy_result()));
 }
 
+/**
+ * @brief Function to delete ui
+ */
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
+/**
+ * @brief Function to set display
+ * @param expr expression to be set
+ */
 void MainWindow::set_display(QString expr) {
     if (this->lastToken == NONE) {
         ui->label->setStyleSheet(STYLE_DISPLAY_DEFAULT);
@@ -93,6 +104,10 @@ void MainWindow::set_display(QString expr) {
     ui->label->setText(expr);
 }
 
+/**
+ * @brief Function for displaying errors
+ * @param error_code number of error
+ */
 void MainWindow::display_error(int error_code) {
     qDebug() << "Error code:" << error_code;
 
@@ -113,6 +128,11 @@ void MainWindow::display_error(int error_code) {
     this->stop_number();
 }
 
+/**
+ * @brief Function for appending expression
+ * @param expr expression to append
+ * @param force_append 
+ */
 void MainWindow::append_to_expression(QString expr, bool force_append) {
     QString final_expression;
     if (this->empty && !force_append) {
@@ -130,23 +150,35 @@ void MainWindow::append_to_expression(QString expr, bool force_append) {
     this->set_display(final_expression);
 }
 
+/**
+ * @brief Function for appending expression
+ * @param expr expression that is being appended
+ */
 void MainWindow::append_to_expression(QString expr) {
     this->append_to_expression(expr, false);
 }
 
+/**
+ * @brief Reset function
+ */
 void MainWindow::reset() {
     this->empty = true;
     this->lastToken = DIGIT;
     this->paren_count = 0;
 }
 
+/**
+ * @brief Stop_number function
+ */
 void MainWindow::stop_number() {
     this->building_number = false;
     this->has_comma = false;
 }
 
 // Slots
-
+/**
+ * @brief Function appends digits to the expression
+ */
 void MainWindow::append_digit(QString digit)
 {
     this->append_to_expression(digit);
@@ -155,6 +187,9 @@ void MainWindow::append_digit(QString digit)
 }
 
 // Simply append any digits to the expression.
+/**
+ * @brief Function appends digits to the expression after receives press signal
+ */
 void MainWindow::press_digit()
 {
     QPushButton * button = (QPushButton*)sender();
@@ -162,6 +197,9 @@ void MainWindow::press_digit()
 }
 
 // Plus and minus
+/**
+ * @brief Function deal with plus and minus sign
+ */
 void MainWindow::press_sign() {
     QPushButton * button = (QPushButton*)sender();
 
@@ -176,6 +214,9 @@ void MainWindow::press_sign() {
 }
 
 // Simply append any operators that don't require any extra work or checks.
+/**
+ * @brief Function appends operators
+ */
 void MainWindow::press_simple_operator() {
     QPushButton * button = (QPushButton*)sender();
 
@@ -195,6 +236,9 @@ void MainWindow::press_simple_operator() {
 }
 
 // Clear
+/**
+ * @brief Function clears the calculator panel
+ */
 void MainWindow::on_pushButton_clear_released()
 {
     this->set_display("0");
@@ -204,6 +248,9 @@ void MainWindow::on_pushButton_clear_released()
 }
 
 // Evaluate
+/**
+ * @brief Function evaluate expression and gives the result to the calculator panel
+ */
 void MainWindow::on_pushButton_equal_released()
 {
     // Evaluate expression in the display label.
@@ -243,6 +290,9 @@ void MainWindow::on_pushButton_equal_released()
 }
 
 // Open parenthesses
+/**
+ * @brief Function checks left brackets
+ */
 void MainWindow::on_pushButton_l_bracket_released()
 {
     QPushButton * button = (QPushButton*)sender();
@@ -261,6 +311,9 @@ void MainWindow::on_pushButton_l_bracket_released()
 
 
 // Close parenthesses
+/**
+ * @brief Function checks right brackets
+ */
 void MainWindow::on_pushButton_r_bracket_released()
 {
     QPushButton * button = (QPushButton*)sender();
@@ -289,6 +342,9 @@ void MainWindow::on_pushButton_r_bracket_released()
 }
 
 // Square
+/**
+ * @brief Function resolve square after received release signal
+ */
 void MainWindow::on_pushButton_square_released()
 {
     QPushButton * button = (QPushButton*)sender();
@@ -311,6 +367,9 @@ void MainWindow::on_pushButton_square_released()
 
 
 // Power
+/**
+ * @brief Function resolve power after received release signal
+ */
 void MainWindow::on_pushButton_power_released()
 {
     // There has to be a number on the left.
@@ -331,6 +390,9 @@ void MainWindow::on_pushButton_power_released()
 
 
 // Factorial
+/**
+ * @brief Function resolve factorial after received release signal
+ */
 void MainWindow::on_pushButton_fact_released()
 {
     // There has to be a number on the left side.
@@ -349,7 +411,9 @@ void MainWindow::on_pushButton_fact_released()
     this->stop_number();
 }
 
-
+/**
+ * @brief Function releases comma to the calculator panel
+ */
 void MainWindow::on_pushButton_comma_released()
 {
     if (!this->building_number) {
@@ -367,6 +431,9 @@ void MainWindow::on_pushButton_comma_released()
     this->has_comma = true;
 }
 
+/**
+ * @brief Function copy result from the calculator panel
+ */
 void MainWindow::copy_result()
 {
     QClipboard *clipboard = QGuiApplication::clipboard();
@@ -375,6 +442,9 @@ void MainWindow::copy_result()
     clipboard->setText(content);
 }
 
+/**
+ * @brief Popup window with hint how to use calculator
+ */
 void MainWindow::on_pushButton_hint_released()
 {
     QMessageBox msgBox;
