@@ -471,5 +471,9 @@ double precedenceAnalysis(list<StackElement> myList){
         }
     }while(myStack.size() != 2 || myList.size() != 1);
 
+    if (myStack.top().type != "E-type" && myStack.top().type != "number"){
+        throw WRONG_INPUT;
+    }
+
     return myStack.top().value;
 }
