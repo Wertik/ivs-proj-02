@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
+    setFixedSize(QSize(441, 771));
+
     ui->setupUi(this);
 
     QString button_style = "QPushButton { border: none; background-color: #C4C4C4; } QPushButton:pressed { background-color: #B5B5B5; }";
