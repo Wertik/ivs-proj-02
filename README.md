@@ -3,70 +3,28 @@
     <b>Kalkulačka</b>
 </p>
 
-# Prostředí
-
-- Ubuntu 64bit
-
-# Autoři
-
-CMYK Team
-
-| Login | Jméno | Github |
-|--|--|--|
-| xkucik00 | Kučík Adam | [@Adam-K2](https://github.com/Adam-K2) |
-| xotrad00 | Otradovec Martin | [@Wertik](https://github.com/Wertik) | 
-| xskund02 | Škunda Jakub | [@jakubskunda](https://github.com/jakubskunda) |
-| xvince01 | Vincenc Lukáš | [@gunter-dev](https://github.com/gunter-dev) |
-
-# Návrh UI
-
-Figma: https://www.figma.com/file/T5BqQWrPt3MQ4FjbT0GfVf/IVS-project-2?node-id=0%3A1
-
-# Klávesové zkratky
-
-| Zkratka | Akce |
-| -- | -- |
-| Num 0 | 0 |
-| Num 1 | 1 |
-| Num 2 | 2 |
-| Num 3 | 3 |
-| Num 4 | 4 |
-| Num 5 | 5 |
-| Num 6 | 6 |
-| Num 7 | 7 |
-| Num 8 | 8 |
-| Num 9 | 9 |
-| / | / |
-| * | * |
-| - | - |
-| + | + |
-| Enter | = |
-| , (del) | , |
-| Šipka vlevo | ( |
-| Šipka vpravo | ) |
-| Šipka nahoru | x<sup>y</sup> |
-| Šipka dolu | √ |
-| Ctrl + C | Zkopírovat obsah displaye |
-| Delete | Vymázání displaye |
-
 # Instalace
 
-Program podporuje všechny platformy založené na debianu a platformy podporující .deb balíčky.
+## Podporovaná prostředí
+
+Program podporuje pouze operační systém Ubuntu 64bit.
+
+## Stáhnutí balíčku
 
 Aktuální ``calc.deb`` můžete stáhnout v [releases](https://github.com/Wertik/ivs-proj-02/releases).
 
-## UI
+## Instalace pomocí Ubuntu Software Install
 
 Menu pro instalaci otevřete dvojklikem na soubor, případně pravým kliknutím a zvolením možnosti ``Open with Software Install``.
 ![install](assets/install_package.png)
 
 Po kliknutí na ``Install`` se aplikace nainstaluje.
 
-## Terminál
+## Instalace přes terminál
 
 Ve složce se souborem ``calc.deb`` pomocí příkazu:
 ```
-dpkg -i calc.deb
+sudo dpkg -i calc.deb
 ```
 
 ---
@@ -109,17 +67,32 @@ rm /opt/calc/calc.png
 
 # Sestavení ze zdroje
 
+## Požadavky
+
 Sestavení je možné pouze na platformě linux.
+
+Jsou nutné apt balíčky ``make, cmake, g++, qt5-default``.
+
+Příkaz pro instalaci všech:
+```
+sudo apt install make
+sudo apt install cmake
+sudo apt install g++
+sudo apt install qt5-default
+```
+---
 
 Stažení zdrojových kódů
 ```
 git clone https://github.com/Wertik/ivs-proj-02.git
 ```
+---
 
 Přesunutí do složky s Makefile
 ```
 cd ivs-proj-02/src/
 ```
+---
 
 Přeložení
 ```
@@ -131,21 +104,55 @@ Aplikaci rovnou spustíte příkazem ```make run```.
 
 # Vytvoření debian balíčku (.deb)
 
-Stažení zdrojových kódů
-```
-git clone https://github.com/Wertik/ivs-proj-02.git
-```
-
-Přesunutí do složky s Makefile
-```
-cd ivs-proj-02/src/
-```
+Nejdříve je nutné aplikaci [sestavit](#sestavení-ze-zdroje).
 
 Vytvoření balíčku
 ```
 make install
 ```
 Vytvoří balíček ``calc.deb`` ve složce ``packages/``
+
+# Klávesové zkratky
+
+| Zkratka | Akce |
+| -- | -- |
+| Num 0 | 0 |
+| Num 1 | 1 |
+| Num 2 | 2 |
+| Num 3 | 3 |
+| Num 4 | 4 |
+| Num 5 | 5 |
+| Num 6 | 6 |
+| Num 7 | 7 |
+| Num 8 | 8 |
+| Num 9 | 9 |
+| / | / |
+| * | * |
+| - | - |
+| + | + |
+| Enter | = |
+| , (del) | , |
+| Šipka vlevo | ( |
+| Šipka vpravo | ) |
+| Šipka nahoru | x<sup>y</sup> |
+| Šipka dolu | √ |
+| Ctrl + C | Zkopírovat obsah displaye |
+| Delete | Vymázání displaye |
+
+# Autoři
+
+CMYK Team
+
+| Login | Jméno | Github |
+|--|--|--|
+| xkucik00 | Kučík Adam | [@Adam-K2](https://github.com/Adam-K2) |
+| xotrad00 | Otradovec Martin | [@Wertik](https://github.com/Wertik) | 
+| xskund02 | Škunda Jakub | [@jakubskunda](https://github.com/jakubskunda) |
+| xvince01 | Vincenc Lukáš | [@gunter-dev](https://github.com/gunter-dev) |
+
+# Návrh UI a mockup budoucí verze
+
+Figma: https://www.figma.com/file/T5BqQWrPt3MQ4FjbT0GfVf/IVS-project-2?node-id=0%3A1
 
 # Licence
 
