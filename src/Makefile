@@ -14,12 +14,14 @@ setup:
 calc:
 	cmake -B../build -S. && cd ../build && make
 
-pack: clean
+pack: dirs clean
 	mkdir -p ../../$(NAME)/repo && cp -a ../. ../../$(NAME)/repo
-	mkdir -p ../../$(NAME)/doc
-	mkdir -p ../../$(NAME)/install
 	cd ../.. && zip -r $(ZIP) $(NAME)
 	cd ../.. && rm -rf $(NAME)
+
+dirs: doc install
+	mkdir -p ../../$(NAME)/doc && cp -a doxygen-gen ../../$(NAME)/doc
+	mkdir -p ../../$(NAME)/install && cp -a ../packages ../../$(NAME)/install
 
 clean:
 	rm -rf ../build
