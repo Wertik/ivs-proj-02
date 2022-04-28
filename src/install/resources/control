@@ -1,6 +1,6 @@
 Package: Calculator
 Version: 1.0.0
 Architecture: all
-Maintainer: Not set
-Description: Not set
+Maintainer: CMYK Team (BUT FIT - IVS)
+Description: Calculator with a set of basic functions.
 Depends: libqt5widgets5

@@ -51,7 +51,10 @@ Aktuální ``calc.deb`` můžete stáhnout v [releases](https://github.com/Werti
 
 ## UI
 
-Nainstalujete dvojklikem na soubor, případně pravým kliknutím a zvolením možnosti "Install package".
+Menu pro instalaci otevřete dvojklikem na soubor, případně pravým kliknutím a zvolením možnosti ``Open with Software Install``.
+![install](assets/install_package.png)
+
+Po kliknutí na ``Install`` se aplikace nainstaluje.
 
 ## Terminál
 
@@ -66,13 +69,17 @@ dpkg -i calc.deb
 
 ### Přes balíček
 
-Opakovaným rozkliknutím instalačního debian balíčku se dá aplikace opět odinstalovat.
+Opakovaným otevřením instalačního menu přes debian balíček se dá aplikace opět odinstalovat.
 ![uninstall](assets/uninstall_package.png)
+
+Po kliknutí na ``Remove`` se aplikace odinstaluje.
 
 ### Přes správce aplikací Ubuntu Software
 
 Otevřete aplikaci ubuntu software pro správu aplikací.
 V záložce "Installed" najděte aplikaci ``calculator`` a klikněte na ``Remove``.
+
+![uninstall_software_center](assets/uninstall_software_center.png)
 
 ## Package manager (terminál)
 
