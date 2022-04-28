@@ -378,43 +378,55 @@ void MainWindow::copy_result()
 void MainWindow::on_pushButton_hint_released()
 {
     QMessageBox msgBox;
-    QString msg = tr("                          Napoveda                           \n \
-Cislice 0-9 zadavaju cisla do panela\n \
-Funkcia '+' scitava cisla (pouzitie -> x+y)\n \
-Funkcia '-' odcitava cisla (pouzitie -> x-y)\n \
-Funkcia '*' nasobi cisla (pouzitie -> x*y)\n \
-Funkcia '/' deli cisla (pouzitie -> x/y)\n \
-Funkcia '!' urobi faktorial cisla (pouzitie -> !x)\n \
-Funkcia '√' odmocni cislo (pouzitie -> y√x)\n \
-Funkcia '^' urobi mocninu cisla (pouzitie -> x^y)\n \
-Funkcia 'C' vymaze panel\n \
-Funkcia '=' vyhodnoti vyraz\n \
-Klavesove skratky:\n \
-Num 0 - 0\n \
-Num 1 - 1\n \
-Num 2 - 2\n \
-Num 3 - 3\n \
-Num 4 - 4\n \
-Num 5 - 5\n \
-Num 6 - 6\n \
-Num 7 - 7\n \
-Num 8 - 8\n \
-Num 9 - 9\n \
-'/' - '/'\n \
-'*' - '*'\n \
-'-' - '-'\n \
-'+' - '+'\n \
-Enter - '='\n \
-,(del) - ','\n \
-delete - 'C'\n \
-Šipka vlevo - (\n \
-Šipka vpravo - )\n \
-Šipka nahoru - x^y\n \
-Šipka dolu - √\n \
-Ctrl + C - Zkropirovanie obsahu displayu\n \
-");
+    QString msg = tr(
+        "<h1>Nápověda</h1> \
+         <h2>Tlačítka</h2> \
+        Číslice 0-9 zadávají čisla do displaye<br /> \
+        Funkce '+' sčítá čísla (použití -> x+y)<br /> \
+        Funkce '-' odčitáva čísla (použití -> x-y)<br /> \
+        Funkce '*' nasobí čísla (použití -> x*y)<br /> \
+        Funkce '/' dělí čísla (použití -> x/y)<br /> \
+        Funkce '!' urobí faktoriál čísla (použití -> !x)<br /> \
+        Funkce '√' odmocní čislo (použití -> y√x)<br /> \
+        Funkce '^' urobí mocninu čísla (použití -> x^y)<br /> \
+        Funkce 'C' vymaže display<br /> \
+        Funkce '=' vyhodnoti vyraz \
+        \
+        <h2>Klávesové zkratky</h2><br /> \
+        <style>table { border-collapse: collapse; } td { text-align: left; } tr { border-bottom: 1pt solid white; }</style>  \
+        <table>\
+            <tr><th>Zkratka</th><th>Akce</th></tr> \
+            <tr><td>Num 0</td> <td>0</td></tr> \
+            <tr><td>Num 1</td> <td>1</td></tr> \
+            <tr><td>Num 2</td> <td>2</td></tr> \
+            <tr><td>Num 3</td> <td>3</td></tr> \
+            <tr><td>Num 4</td> <td>4</td></tr> \
+            <tr><td>Num 5</td> <td>5</td></tr> \
+            <tr><td>Num 6</td> <td>6</td></tr> \
+            <tr><td>Num 7</td> <td>7</td></tr> \
+            <tr><td>Num 8</td> <td>8</td></tr> \
+            <tr><td>Num 9</td> <td>9</td></tr> \
+            <tr><td>/</td> <td>/</td></tr> \
+            <tr><td>*</td> <td>*</td></tr> \
+            <tr><td>-</td> <td>-</td></tr> \
+            <tr><td>+</td> <td>+</td></tr> \
+            <tr><td>Enter</td> <td>=</td></tr> \
+            <tr><td>, (delimiter)</td> <td>,</td></tr> \
+            <tr><td>Šipka vlevo</td> <td>(</td></tr> \
+            <tr><td>Šipka vpravo</td> <td>)</td></tr> \
+            <tr><td>Šipka nahoru</td> <td>Mocnina</td></tr> \
+            <tr><td>Šipka dolu</td> <td>Odmocnina</td></tr> \
+            <tr><td>Ctrl + C</td> <td>Zkopírování hodnoty z displaye</td></tr> \
+            <tr><td>Delete</td> <td>Vymazání displaye</td></tr> \
+            <tr><td><span style=\"color: #6C7673;\">-------------------</span></td><td><span style=\"color: #6C7673;\">--------------------</span></td></tr>\
+        </table> \
+        \
+        <br /><br />\
+        Aplikace vytvořena v rámci projektu předmětu IVS, VUT FIT.<br />\
+        CMYK Team, 28. 4. 2022 \
+    ");
     msgBox.setText(msg);
     msgBox.setWindowTitle("Kalkulačka - Nápověda");
-    msgBox.setStyleSheet("color: rgb(255, 255, 255); background-color: #6C7673;");
+    msgBox.setStyleSheet("color: #F4EAEA; background-color: #6C7673; font-size: 14px;");
     msgBox.exec();
 }
