@@ -683,7 +683,7 @@ border: none;</string>
      <rect>
       <x>11</x>
       <y>14</y>
-      <width>41</width>
+      <width>31</width>
       <height>21</height>
      </rect>
     </property>
@@ -693,8 +693,12 @@ border: none;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">border: 1px solid white;
-color: rgb(255, 255, 255);</string>
+     <string notr="true">QPushButton{
+border: 1px solid white;
+color: rgb(255, 255, 255);
+border-width: 1px;
+border-radius: 10px;
+}</string>
     </property>
     <property name="text">
      <string>?</string>
