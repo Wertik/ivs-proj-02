@@ -1,9 +1,0 @@
-; indicate this is the root of the project
-root = true
-
-[*]
-indent_style = space
-end_of_line = lf
-
-[*.cpp]
-indent_size = 4
