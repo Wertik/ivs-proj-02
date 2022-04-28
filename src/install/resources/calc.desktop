@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Calculator
+Name[cs]=Kalkulačka
+Comment=Calculator app with basic functions.
+Terminal=false
+Categories=Utility;Math;Qt
+Icon=/opt/calc/calc.png
+Type=Application
+Exec=/usr/local/bin/calc

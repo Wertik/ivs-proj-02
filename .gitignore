@@ -30,3 +30,7 @@
 
 # Local project files.
 *.pro.user
+
+# Build folders & packaging
+build*
+src/install/calc/

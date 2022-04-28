@@ -1,0 +1,39 @@
+#!/bin/bash
+
+PACK_NAME="$1"
+
+if [ -z "$PACK_NAME" ]; then
+    PACK_NAME="calc"
+fi
+
+HOME_DIR="../.."
+
+PACK_DIR="./$PACK_NAME"
+
+BIN="$PACK_DIR/usr/local/bin"
+OPT="$PACK_DIR/opt/$PACK_NAME"
+DEBIAN="$PACK_DIR/DEBIAN"
+APPS="$PACK_DIR/usr/share/applications"
+
+BUILD="$HOME_DIR/build"
+ASSETS="$HOME_DIR/assets"
+RESOURCES="./resources"
+
+# Clean packages
+./clean $PACK_DIR
+
+# Create structure & pack resources
+mkdir -p "$BIN" && cp "$BUILD/calc" "$BIN" && \
+ mkdir -p "$DEBIAN" && cp "$RESOURCES/control" "$DEBIAN/" && cp "$RESOURCES/postinst" "$DEBIAN/" && \
+ mkdir -p "$OPT" && cp "$ASSETS/icon/icon-full-size.png" "$OPT/$PACK_NAME.png" && \
+ mkdir -p "$APPS" && cp "$RESOURCES/$PACK_NAME.desktop" "$APPS"
+
+# Configure permissions
+
+chmod 0755 "$DEBIAN/postinst"
+
+chmod 0755 "$DEBIAN/control"
+
+# Build the package
+
+dpkg-deb --build --root-owner-group "$PACK_DIR"
