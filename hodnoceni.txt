@@ -1,4 +1,4 @@
-xlogin01 100 (základ GUI a základní mat. operace)
-xlogin02 100 (pokročilé mat. operace)
-xlogin03 90 (profiling, instalátor)
-xlogin04 110 (testy, dokumentace)
+xkucik00 100 (uživatelský manuál, nápověda, prvotní prototyp aplikace)
+xotrad00 100 (integrace, zpracování inputu aj., instalátor, readme)
+xskund02 100 (matematická knihovna a testy, profiling, doxygen)
+xvince01 100 (ikonka, návrh UI - figma, mockup, doplňující testy)
