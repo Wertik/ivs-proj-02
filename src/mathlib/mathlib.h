@@ -138,8 +138,8 @@ double myFactiorial(double nr);
 /** \relates Calculator
  * @brief implementation of exponent function 
  * 
- * @param nr1 
- * @param nr2 
+ * @param nr1 base of exponent
+ * @param nr2 exponent
  * @return 
  */
 double myExponent(double nr1, double nr2);
@@ -148,8 +148,8 @@ double myExponent(double nr1, double nr2);
 /** \relates Calculator
  * @brief implementation of root function
  * 
- * @param nr1 
- * @param nr2 
+ * @param nr1 Degree of the root
+ * @param nr2 number from which root is calculated
  * @return double 
  */
 double myRoot(double nr1, double nr2);
