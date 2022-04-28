@@ -1,6 +1,3 @@
-#ifndef MATHLIB_H
-#define MATHLIB_H
-
 /**
  * @file mathlib2.h
  * @author Jakub Skunda (xskund02)
@@ -12,6 +9,11 @@
  * 
  */
 
+#ifndef MATHLIB_H
+#define MATHLIB_H
+
+
+
 #include <iostream>
 #include <stdio.h>
 #include <string>
@@ -19,8 +21,8 @@
 #include <list>
 #include <cmath>
 using namespace std;
-
-/**
+ 
+/** \relates
  * @brief Class for Stack and List
  * @param type type of element in stack or list
  * @param value value of element
@@ -45,7 +47,7 @@ enum ErrorCode{
 
 // functions for PSA
 
-/**
+/** \relates Calculator
  * @brief Function that selects state from PSA table
  * 
  * @param myList 
@@ -54,25 +56,23 @@ enum ErrorCode{
 double precedenceAnalysis(list<StackElement> myList);
 
 
-/**
+/** \relates Calculator
  * @brief Returns type of top terminal from stack
- * 
  * @param myStack 
  * @return int 
  */
 int stackTop(stack<StackElement> myStack);
 
 
-/**
+/** \relates Calculator
  * @brief Returns type of incoming symbol
- * 
  * @param myList 
  * @return int 
  */
 int incomingType(list<StackElement> myList);
 
-
-/**
+ 
+/** \relates Calculator
  * @brief Function that reduces terminal to non-term or group of non-terms to non-term
  * 
  * @param myStack 
@@ -83,7 +83,7 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack);
 
 // my math operations
 
-/**
+/** \relates Calculator
  * @brief implementation of addition
  * 
  * @param nr1 first number
@@ -93,7 +93,7 @@ stack<StackElement> reduceByRule(stack<StackElement> myStack);
 double myPlus(double nr1, double nr2);
 
 
-/**
+/** \relates Calculator
  * @brief implementation of subtraction
  * 
  * @param nr1 first number
@@ -103,7 +103,7 @@ double myPlus(double nr1, double nr2);
 double myMinus(double nr1, double nr2);
 
 
-/**
+/** \relates Calculator
  * @brief implementation of multiplication
  * 
  * @param nr1 first number
@@ -113,7 +113,7 @@ double myMinus(double nr1, double nr2);
 double myMultiplication(double nr1, double nr2);
 
 
-/**
+/** \relates 
  * @brief implementation of division
  * 
  * @param nr1 first number
@@ -124,7 +124,7 @@ double myMultiplication(double nr1, double nr2);
 double myDivision(double nr1, double nr2);
 
 
-/**
+/** \relates Calculator
  * @brief implementation of factorial
  * 
  * @param nr 
@@ -135,7 +135,7 @@ double myDivision(double nr1, double nr2);
 double myFactiorial(double nr);
 
 
-/**
+/** \relates Calculator
  * @brief implementation of exponent function 
  * 
  * @param nr1 
@@ -145,7 +145,7 @@ double myFactiorial(double nr);
 double myExponent(double nr1, double nr2);
 
 
-/**
+/** \relates Calculator
  * @brief implementation of root function
  * 
  * @param nr1 
@@ -159,7 +159,11 @@ class Calculator{
 
 public:
 
-    double processInput(string vyraz);
+    /**
+    * @brief Function that process expression on input
+    * @param expression expression to process
+    */
+    double processInput(string expression);
 
 };
 
