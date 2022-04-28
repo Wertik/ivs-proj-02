@@ -33,4 +33,4 @@
 
 # Build folders & packaging
 build*
-src/install/calc/
+packages/

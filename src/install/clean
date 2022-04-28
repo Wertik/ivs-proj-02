@@ -6,4 +6,4 @@ if [ -z "$PACK_DIR" ]; then
     PACK_DIR="calc"
 fi
 
-rm -rf "$1"
+rm -rf "../../packages/"

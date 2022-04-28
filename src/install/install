@@ -1,14 +1,19 @@
 #!/bin/bash
 
 PACK_NAME="$1"
+VERSION="$2"
 
 if [ -z "$PACK_NAME" ]; then
     PACK_NAME="calc"
 fi
 
+if [ -z "$VERSION" ]; then
+    VERSION="1.0.0"
+fi
+
 HOME_DIR="../.."
 
-PACK_DIR="./$PACK_NAME"
+PACK_DIR="./$HOME_DIR/packages/$PACK_NAME"
 
 BIN="$PACK_DIR/usr/local/bin"
 OPT="$PACK_DIR/opt/$PACK_NAME"
@@ -22,11 +27,21 @@ RESOURCES="./resources"
 # Clean packages
 ./clean $PACK_DIR
 
+replace_version() {
+    _result_var=$1
+    _result=$(cat "$2" | sed "s/%VERSION%/$VERSION/g")
+    eval $_result_var="'$_result'"
+}
+
+replace_version CONTROL "$RESOURCES/control"
+replace_version DESKTOP_ENTRY "$RESOURCES/calc.desktop"
+replace_version POSTINST "$RESOURCES/postinst"
+
 # Create structure & pack resources
 mkdir -p "$BIN" && cp "$BUILD/calc" "$BIN" && \
- mkdir -p "$DEBIAN" && cp "$RESOURCES/control" "$DEBIAN/" && cp "$RESOURCES/postinst" "$DEBIAN/" && \
+ mkdir -p "$DEBIAN" && echo "$CONTROL" > "$DEBIAN/control" && echo "$POSTINST" > "$DEBIAN/postinst" && \
  mkdir -p "$OPT" && cp "$ASSETS/icon/icon-full-size.png" "$OPT/$PACK_NAME.png" && \
- mkdir -p "$APPS" && cp "$RESOURCES/$PACK_NAME.desktop" "$APPS"
+ mkdir -p "$APPS" && echo "$DESKTOP_ENTRY" > "$APPS/$PACK_NAME.desktop"
 
 # Configure permissions
 
