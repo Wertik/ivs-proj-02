@@ -8,8 +8,8 @@
 
 using namespace std;
 
-#define STYLE_DISPLAY_DEFAULT "background-color: #444A49; color: #F4EAEA; border-radius: 10px;"
-#define STYLE_DISPLAY_ERROR "background-color: #444A49; color: #F99494; border-radius: 10px;"
+#define STYLE_DISPLAY_DEFAULT "background-color: #444A49; color: #F4EAEA; border-radius: 10px; font-size: %%FONT_SIZEpx;"
+#define STYLE_DISPLAY_ERROR "background-color: #444A49; color: #F99494; border-radius: 10px; font-size: %%FONT_SIZEpx;"
 
 /**
  * @brief MainWindow function
@@ -82,6 +82,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Add a shortcut for copy
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_C), this, SLOT(copy_result()));
+    qDebug() << fill_font_size(STYLE_DISPLAY_DEFAULT);
+    ui->label->setStyleSheet(fill_font_size(STYLE_DISPLAY_DEFAULT));
 }
 
 /**
@@ -93,15 +95,47 @@ MainWindow::~MainWindow()
 }
 
 /**
+ * @param QString style to work with.
+ *
+ * @brief Figures out the ideal font size for the label given it's text length.
+ * Takes a given @param style, replaces the placeholder %%FONT_SIZE with font size and returns it.
+ *
+ * @return QString Style with replaced %%FONT_SIZE placeholder.
+ */
+QString MainWindow::fill_font_size(QString style) {
+    int width = (int) ui->label->text().size();
+
+    qDebug() << "Width" << width;
+
+    int font_size = FONT_DEFAULT;
+
+    // Under threshold
+    if (width >= CHARACTER_THRESHOLD) {
+        font_size = max(FONT_MIN, FONT_DEFAULT - (width - CHARACTER_THRESHOLD) * FONT_STEP);
+    }
+
+    qDebug() << "Font size:" << font_size;
+
+    style = style.replace("%%FONT_SIZE", QString::number(font_size, 10, 0));
+    return style;
+}
+
+/**
  * @brief Function to set display
  * @param expr expression to be set
  */
-void MainWindow::set_display(QString expr) {
-    if (this->lastToken == NONE) {
-        ui->label->setStyleSheet(STYLE_DISPLAY_DEFAULT);
-    }
-
+void MainWindow::set_display(QString expr, bool error) {
     ui->label->setText(expr);
+
+    if (error) {
+        ui->label->setStyleSheet(fill_font_size(STYLE_DISPLAY_ERROR));
+    } else {
+        ui->label->setStyleSheet(fill_font_size(STYLE_DISPLAY_DEFAULT));
+    }
+}
+
+void MainWindow::set_display(QString expr) {
+    this->set_display(expr, false);
 }
 
 /**
@@ -120,8 +154,7 @@ void MainWindow::display_error(int error_code) {
         error_message = error_messages[error_code];
     }
 
-    ui->label->setStyleSheet(STYLE_DISPLAY_ERROR);
-    this->set_display("ERR: " + error_message);
+    this->set_display("ERR: " + error_message, true);
 
     this->lastToken = NONE;
     this->empty = true;
@@ -141,6 +174,10 @@ void MainWindow::append_to_expression(QString expr, bool force_append) {
         this->empty = false;
     } else {
         final_expression = ui->label->text() + expr;
+
+        if (final_expression.size() > CHARACTER_LIMIT) {
+            return;
+        }
 
         if (force_append) {
             this->empty = false;
@@ -242,6 +279,8 @@ void MainWindow::press_simple_operator() {
 void MainWindow::on_pushButton_clear_released()
 {
     this->set_display("0");
+    ui->label->setStyleSheet(fill_font_size(STYLE_DISPLAY_DEFAULT));
+
     this->has_comma = false;
     this->building_number = true;
     this->reset();
@@ -278,6 +317,7 @@ void MainWindow::on_pushButton_equal_released()
     qResult = qResult.replace(".", ",");
 
     ui->label->setText(qResult);
+    ui->label->setStyleSheet(fill_font_size(STYLE_DISPLAY_DEFAULT));
 
     if (qResult.contains(".")) {
         this->has_comma = true;

@@ -522,16 +522,16 @@ border: none;</string>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>24</x>
+      <x>26</x>
       <y>40</y>
-      <width>393</width>
+      <width>391</width>
       <height>110</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Inria Sans Light</family>
-      <pointsize>24</pointsize>
+      <pointsize>36</pointsize>
      </font>
     </property>
     <property name="layoutDirection">

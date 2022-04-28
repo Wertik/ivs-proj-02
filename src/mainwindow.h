@@ -33,6 +33,17 @@ const QString error_messages[ERROR_MESSAGES] {
     "Chybný výraz"
 };
 
+// The lowest font size
+#define FONT_MIN 20
+// Font size decrease per width step
+#define FONT_STEP 2
+// When to start shrinking the font
+#define CHARACTER_THRESHOLD 16
+// Default font size
+#define FONT_DEFAULT 36
+// Maximum number of characters
+#define CHARACTER_LIMIT 31
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -54,6 +65,9 @@ private:
     // Count the number of open parenthesses.
     int paren_count = 0;
 
+    QString fill_font_size(QString style);
+
+    void set_display(QString expr, bool error);
     void set_display(QString expr);
 
     void display_error(int error_code);
