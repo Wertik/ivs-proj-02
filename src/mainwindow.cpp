@@ -380,13 +380,13 @@ void MainWindow::on_pushButton_hint_clicked()
     QMessageBox msgBox;
     QString msg = tr("                          Napoveda                           \n \
 Cislice 0-9 zadavaju cisla do panela\n \
-Funkcia '+' scitava cisla\n \
-Funkcia '-' odcitava cisla\n \
-Funkcia '*' nasobi cisla\n \
-Funkcia '/' deli cisla\n \
-Funkcia '!' urobi faktorial cisla\n \
-Funkcia '√' odmocni cislo\n \
-Funkcia '^' urobi mocninu cisla\n \
+Funkcia '+' scitava cisla (pouzitie -> x+y)\n \
+Funkcia '-' odcitava cisla (pouzitie -> x-y)\n \
+Funkcia '*' nasobi cisla (pouzitie -> x*y)\n \
+Funkcia '/' deli cisla (pouzitie -> x/y)\n \
+Funkcia '!' urobi faktorial cisla (pouzitie -> !x)\n \
+Funkcia '√' odmocni cislo (pouzitie -> √x)\n \
+Funkcia '^' urobi mocninu cisla (pouzitue -> x^y)\n \
 Funkcia 'C' vymaze panel\n \
 Funkcia '=' vyhodnoti vyraz\n \
 Klavesove skratky:\n \
@@ -406,6 +406,7 @@ Num 9 - 9\n \
 '+' - '+'\n \
 Enter - '='\n \
 ,(del) - ','\n \
+delete - 'C'\n \
 Šipka vlevo - (\n \
 Šipka vpravo - )\n \
 Šipka nahoru - x^y\n \
