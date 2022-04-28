@@ -462,7 +462,7 @@ void MainWindow::on_pushButton_hint_released()
         Funkce 'C' vymaže display<br /> \
         Funkce '=' vyhodnoti vyraz \
         \
-        <h2>Klávesové zkratky</h2><br /> \
+        <h2>Klávesové zkratky</h2> \
         <style>table { border-collapse: collapse; } td { text-align: left; } tr { border-bottom: 1pt solid white; }</style>  \
         <table>\
             <tr><th>Zkratka</th><th>Akce</th></tr> \
