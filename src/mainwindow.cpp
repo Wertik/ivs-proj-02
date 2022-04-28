@@ -375,23 +375,45 @@ void MainWindow::copy_result()
     clipboard->setText(content);
 }
 
-void MainWindow::on_pushButton_hint_released()
+void MainWindow::on_pushButton_hint_clicked()
 {
     QMessageBox msgBox;
-    QString msg = tr(
-        "                          Napoveda                           \n \
-        Cislice 0-9 zadavaju cisla do panela\n \
-        Funkcia '+' scitava cisla\n \
-        Funkcia '-' odcitava cisla\n \
-        Funkcia '*' nasobi cisla\n \
-        Funkcia '/' deli cisla\n \
-        Funkcia '!' urobi faktorial cisla\n \
-        Funkcia '√' odmocni cislo\n \
-        Funkcia '^' urobi mocninu cisla\n \
-        Funkcia 'C' vymaze panel\n \
-        Funkcia '=' vyhodnoti vyraz"
-    );
+    QString msg = tr("                          Napoveda                           \n \
+Cislice 0-9 zadavaju cisla do panela\n \
+Funkcia '+' scitava cisla\n \
+Funkcia '-' odcitava cisla\n \
+Funkcia '*' nasobi cisla\n \
+Funkcia '/' deli cisla\n \
+Funkcia '!' urobi faktorial cisla\n \
+Funkcia '√' odmocni cislo\n \
+Funkcia '^' urobi mocninu cisla\n \
+Funkcia 'C' vymaze panel\n \
+Funkcia '=' vyhodnoti vyraz\n \
+Klavesove skratky:\n \
+Num 0 - 0\n \
+Num 1 - 1\n \
+Num 2 - 2\n \
+Num 3 - 3\n \
+Num 4 - 4\n \
+Num 5 - 5\n \
+Num 6 - 6\n \
+Num 7 - 7\n \
+Num 8 - 8\n \
+Num 9 - 9\n \
+'/' - '/'\n \
+'*' - '*'\n \
+'-' - '-'\n \
+'+' - '+'\n \
+Enter - '='\n \
+,(del) - ','\n \
+Šipka vlevo - (\n \
+Šipka vpravo - )\n \
+Šipka nahoru - x^y\n \
+Šipka dolu - √\n \
+Ctrl + C - Zkropirovanie obsahu displayu\n \
+");
     msgBox.setText(msg);
+    msgBox.setStyleSheet("color: rgb(255, 255, 255); background-color: #6C7673;");
     msgBox.exec();
 }
 
