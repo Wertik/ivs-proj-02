@@ -21,7 +21,6 @@ clean:
 	rm -rf ../build
 	rm -rf ../packages
 	rm -rf doxygen-gen
-	cd install && ./clean
 	cd tests && rm -rf CMakeFiles runTests cmake_install.cmake CMakeCache.txt Makefile
 	cd profiling && rm -rf stddev gmon.out
 
