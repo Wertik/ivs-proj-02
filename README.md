@@ -1,6 +1,6 @@
-<p align="center" style="font-size: 42px;">
+<p align="center">
     <img src="./assets/icon/icon-128.png"><br />
-    Kalkulačka
+    <b>Kalkulačka</b>
 </p>
 
 # Prostředí
