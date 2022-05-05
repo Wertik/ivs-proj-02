@@ -21,7 +21,7 @@ pack: dirs clean
 
 dirs: doc install
 	mkdir -p ../../$(NAME)/doc && cp -a doxygen-gen ../../$(NAME)/doc
-	mkdir -p ../../$(NAME)/install && cp -a ../packages ../../$(NAME)/install
+	mkdir -p ../../$(NAME)/install && cp -a ../packages/calc/calc_$(VERSION)_all.deb ../../$(NAME)/install
 
 clean:
 	rm -rf ../build
