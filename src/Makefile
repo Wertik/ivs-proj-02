@@ -1,4 +1,4 @@
-VERSION=1.1.0
+VERSION=1.1.1
 NAME=xkucik00_xotrad00_xskund02_xvince01
 ZIP=$(NAME).zip
 

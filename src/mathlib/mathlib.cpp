@@ -89,6 +89,14 @@ double myRoot(double nr1, double nr2){
 }
 
 double Calculator::processInput(string expression){
+
+    // Configure locale to C default
+
+    // Save the current locale to restore it later
+    char *locale = setlocale(LC_NUMERIC, NULL);
+
+    // Set to C
+    setlocale(LC_NUMERIC, "C");
     
     list<StackElement> myList;
     string value;
@@ -181,6 +189,10 @@ double Calculator::processInput(string expression){
     myList.push_back(*end);
 
     double result = precedenceAnalysis(myList);
+
+    // Restore locale
+    setlocale(LC_NUMERIC, locale);
+
     return result;    
 }
 
