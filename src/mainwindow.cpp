@@ -542,7 +542,7 @@ void MainWindow::on_pushButton_hint_released()
         <h4>ERR 4: Odmocnitel není celé číslo</h4><p>Aplikace narazila na odmocninu y√x, kde y je desetinné číslo.</p>  \
         <h4>ERR 5: Odmocnitel menší než 1</h4><p>Aplikace narazila na odmocninu y√x, kde y menší než 1.</p>  \
         <h4>ERR 6: Záporná odmocnina</h4><p>Aplikace narazila na odmocninu y√x, kde x záporné a y je sudé číslo.</p>  \
-        <h4>ERR 7: Nelze zpracovat výraz</h4><p>Aplikace narazila nachybu ve zpracování výrazu. Pardon, naše chyba.</p>  \
+        <h4>ERR 7: Nelze zpracovat výraz</h4><p>Aplikace narazila na chybu ve zpracování výrazu. Pardon, naše chyba.</p>  \
         <h4>ERR 8: Chybné zadání</h4><p>Chyba zadání výrazu. Vaše chyba, očekávám omluvu.</p></td></tr></table>  \
         <br /><br />\
         <p style=\"text-align: center;\">Aplikace vytvořena v rámci projektu předmětu IVS, VUT FIT.<br />\
